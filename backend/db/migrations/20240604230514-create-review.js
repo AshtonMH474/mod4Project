@@ -6,26 +6,37 @@ if (process.env.NODE_ENV === 'production') {
 }
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Images', {
+    await queryInterface.createTable('Reviews', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      imageableType: {
-        type: Sequelize.ENUM("User","Spot","Review")
-      },
-      imageableId: {
+      userId: {
         type: Sequelize.INTEGER,
+        allowNull:false,
+        references:{
+          model: 'Users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
-      url: {
-        type: Sequelize.TEXT,
+      spotId: {
+        type: Sequelize.INTEGER,
+        allowNull:false,
+        references:{
+          model: 'Spots',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
+      },
+      review: {
+        type: Sequelize.STRING,
         allowNull:false
       },
-      preview: {
-        type: Sequelize.BOOLEAN,
-        allowNull:false
+      stars: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -40,7 +51,7 @@ module.exports = {
     },options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Images";
+    options.tableName = "Reviews";
     return queryInterface.dropTable(options);
   }
 };

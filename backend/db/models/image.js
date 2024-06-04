@@ -4,6 +4,12 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Image extends Model {
+
+    getImageable(options){
+      if(!this.imageableType) return Promise.resolve(null);
+      const imageType = `get${this.imageableType}`;
+      return this[imageType](options);
+    }
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,19 +17,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Image.belongsTo(models.User, {
+        foreignKey:"imageableId",
+        constraints:false
+      })
+
+      Image.belongsTo(models.Spot, {
+        foreignKey:"imageableId",
+        constraints:false
+      })
+
+      Image.belongsTo(models.Review, {
+        foreignKey:"imageableId",
+        constraints:false
+      })
     }
   }
   Image.init({
     imageableType:{
-    type: DataTypes.STRING,
-    allowNull:false
+    type: DataTypes.ENUM("User","Spot", "Review"),
     },
     imageableId:{
     type:DataTypes.INTEGER,
-    allowNull:false
     },
     url:{
-     type:DataTypes.STRING,
+     type:DataTypes.TEXT,
      allowNull:false
     },
     preview:{
