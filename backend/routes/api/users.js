@@ -30,6 +30,30 @@ const validateSignup = [
   handleValidationErrors
 ];
 
+async function findIds(){
+  let arr = [];
+
+  let person1 = await User.findOne({where:{firstName:'Demo'}});
+  let person2 = await User.findOne({where:{firstName:'Fake'}});
+  let person3 = await User.findOne({where:{firstName:'user2'}});
+
+  arr.push(person1.id);
+  arr.push(person2.id);
+  arr.push(person3.id);
+
+  return arr;
+
+  }
+
+
+
+
+  // router.get('/', async(req,res) => {
+  //   let arr = await findIds();
+  //   console.log(arr);
+  //   res.json(arr);
+  // })
+
 router.post(
     '/', validateSignup,
     async (req, res) => {
