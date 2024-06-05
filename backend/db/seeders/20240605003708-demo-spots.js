@@ -95,7 +95,10 @@ module.exports = {
 
 
 
-async function findIds(){
+ async function findIds(){
+  // let users = await User.findAll();
+
+
   let arr = [];
 
   let person1 = await User.findOne({where:{firstName:'Demo'}});

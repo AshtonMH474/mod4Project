@@ -46,7 +46,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     preview:{
      type:DataTypes.BOOLEAN,
-     allowNull:false
+     allowNull:false,
+     defaultValue:false,
+     validate: {
+      async count() {
+        let count = await Image.count({where:{
+          preview:true,
+          imageableType:this.imageableType
+        }});
+
+        if(count > 1)throw new Error('only one image can be a preview');
+      }
+     }
     }
   }, {
     sequelize,
