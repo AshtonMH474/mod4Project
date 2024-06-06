@@ -1,7 +1,7 @@
 const express = require('express');
-const { Op } = require('sequelize');
+const { Op} = require('sequelize');
 const bcrypt = require('bcryptjs');
-const {Spot,Image} = require('../../db/models');
+const {Spot,Image,User} = require('../../db/models');
 
 const router = express.Router();
 
@@ -28,9 +28,9 @@ for(let el of spots){
         name:el.name,
         description:el.description,
         price :el.price,
-        avgRating:el.avgRating,
         createdAt:el.createdAt,
-        updatedAt:el.updatedAt
+        updatedAt:el.updatedAt,
+        avgRating:el.avgRating
     }
 
     let image = await Image.findOne({where:{
@@ -39,8 +39,9 @@ for(let el of spots){
 
     }});
 
-
+    if(image){
     obj.previewImage = image.url
+    }
     arr.push(obj);
 
 }
@@ -49,6 +50,39 @@ for(let el of spots){
 res.json(arr);
 
 });
+
+
+router.get('/:spotId', async(req,res,next) => {
+    let spotId = req.params.spotId;
+
+    let spot = await Spot.findOne({
+        where:{id:spotId},
+        attributes:['id','ownerId',"address","city",
+        "state",'country',"lat",'lng',
+        "name", "description","price","createdAt","updatedAt",
+        "numReviews",['avgRating', 'avgStarRating']],
+        include: [{
+            model:Image,
+            as: 'SpotImages',
+            attributes:{exclude:['createdAt','updatedAt',"imageableId","imageableType"]}
+        },
+        {
+            model:User,
+            as:'Owner',
+            attributes:['id','firstName','lastName']
+
+
+        }
+    ]
+    });
+
+    if(spot)res.json(spot);
+    else{
+        const err = new Error("Spot couldn't be found");
+        err.status = 404;
+        res.json({message:err.message});
+    }
+})
 
 
 module.exports = router;
