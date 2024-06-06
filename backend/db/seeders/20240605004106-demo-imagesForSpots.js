@@ -80,7 +80,13 @@ module.exports = {
     options.tableName = 'Images';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      imageableType: { [Op.in]: ['Spot'] }
+      url: { [Op.in]: ['https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGhvdXNlfGVufDB8fDB8fHww',
+      'https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGhvdXNlfGVufDB8fDB8fHww',
+      'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aG91c2V8ZW58MHx8MHx8fDA%3D',
+      'https://media.istockphoto.com/id/1778738751/photo/summer-is-over-in-the-garden.webp?b=1&s=170667a&w=0&k=20&c=wUUWhgbs-sDdQ6yGrkH3dmJVUbuJ6WNcEkfzMCWOSr8=',
+      'https://media.istockphoto.com/id/1455374627/photo/single-story-suburban-home-exterior-with-large-driveway.webp?b=1&s=170667a&w=0&k=20&c=tComMql95oxAvFe_f-qwN7c1zjadva-3113qBbvZVV8=',
+      'https://media.istockphoto.com/id/1496294487/photo/firepit-area-in-back-yard.jpg?s=2048x2048&w=is&k=20&c=RC_dUINHPoFDBPMb0jBCXN95aoN57oCcs1GSgbnjN98='
+      ] }
     }, {});
 
 
