@@ -1,5 +1,5 @@
 const express = require('express');
-const { Op, Model } = require('sequelize');
+const { Op} = require('sequelize');
 const bcrypt = require('bcryptjs');
 const {Spot,Image,User} = require('../../db/models');
 
