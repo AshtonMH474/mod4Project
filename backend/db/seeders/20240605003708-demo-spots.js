@@ -77,11 +77,12 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    let arr = await findIds();
+
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      ownerId: { [Op.in]: [arr[0], arr[1], arr[2]] }
+      address: { [Op.in]: ["123 Disney Lane",
+      '24 Grand Cayon Ave', '965 Breaking Bad'] }
     }, {});
     /**
      * Add commands to revert seed here.

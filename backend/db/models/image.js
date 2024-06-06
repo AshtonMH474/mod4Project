@@ -52,7 +52,8 @@ module.exports = (sequelize, DataTypes) => {
       async count() {
         let count = await Image.count({where:{
           preview:true,
-          imageableType:this.imageableType
+          imageableType:this.imageableType,
+          imageableId: this.imageableId
         }});
 
         if(count > 1)throw new Error('only one image can be a preview');
