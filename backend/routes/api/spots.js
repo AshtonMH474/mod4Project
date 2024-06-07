@@ -30,7 +30,6 @@ router.get('/current', async(req,res,next) => {
     const {token} = req.cookies;
 
     const decodedPayload = jwt.decode(token);
-    console.log(decodedPayload.data.email);
 
     let currSpots = await Spot.findAll({where:{ownerId:decodedPayload.data.id}});
     let arr = await previewImage(currSpots);
@@ -72,6 +71,61 @@ router.get('/:spotId', async(req,res,next) => {
         err.status = 404;
         res.json({message:err.message});
     }
+})
+
+router.post('/', async(req,res,next) => {
+    const {token} = req.cookies;
+
+    if(token){
+        const {address, city, state, country,lat,lng,name,
+             description,price } = req.body;
+
+     const decodedPayload = jwt.decode(token);
+
+    let ownerId = decodedPayload.data.id;
+
+    try{
+        await Spot.create({
+        ownerId:ownerId,
+        address:address,
+        city:city,
+        state:state,
+        country:country,
+        lat:lat,
+        lng:lng,
+        name:name,
+        description:description,
+        price:price
+
+        },{validate:true});
+
+
+        let newSpot = await Spot.findOne({
+        where:{address:address},
+        attributes:{exclude:['avgRating', 'numReviews']}
+    });
+        res.json(newSpot);
+
+    }catch(err){
+        res.status(400);
+        err.message = 'Bad Request'
+        err.errors = {
+            address: "Street address is required",
+            city: "City is required",
+            state: "State is required",
+            country: "Country is required",
+            lat: "Latitude is not valid",
+            lng: "Longitude is not valid",
+            name: "Name must be less than 50 characters",
+            description: "Description is required",
+            price: "Price per day is required"
+      }
+        res.json({message:err.message,errors:err.errors});
+
+}
+
+    }
+
 })
 
 
