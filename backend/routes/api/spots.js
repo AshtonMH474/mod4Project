@@ -106,7 +106,7 @@ router.post('/', async(req,res,next) => {
     });
         res.json(newSpot);
 
-    }catch(err){
+        }catch(err){
         res.status(400);
         err.message = 'Bad Request'
         err.errors = {
@@ -122,14 +122,43 @@ router.post('/', async(req,res,next) => {
       }
         res.json({message:err.message,errors:err.errors});
 
-}
+        }
 
     }
 
 })
 
 
+router.post('/:spotId/images', async(req,res,next) => {
+    const {token} = req.cookies;
+    const decodedPayload = jwt.decode(token);
 
+    let ownerId = decodedPayload.data.id;
+    let spotId = Number(req.params.spotId);
+    let spot = await Spot.findOne({where:{id:spotId}});
+
+    if(spot && token && ownerId && ownerId == spot.ownerId){
+        const {url, preview} = req.body;
+
+
+
+           await Image.create({
+            imageableType:'Spot',
+            imageableId: ownerId,
+            url:url,
+            preview:preview
+           },{validate:true});
+
+           let newImage = await Image.findOne({
+            where:{url:url},
+            attributes:{exclude:['imageableId','imageableType','createdAt','updatedAt']}
+           });
+
+           res.json(newImage);
+
+    }
+   res.status(404).json({message:"Spot couldn't be found"});
+})
 
 
 
