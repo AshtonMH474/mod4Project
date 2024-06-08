@@ -218,6 +218,21 @@ router.put('/:spotId', async(req,res,next) => {
 })
 
 
+router.delete('/:spotId', async(req,res,next) => {
+    const {token} = req.cookies;
+    const decodedPayload = jwt.decode(token);
+
+    let ownerId = decodedPayload.data.id;
+    let spotId = Number(req.params.spotId);
+
+    let spot = await Spot.findOne({ where:{id:spotId} });
+
+    if(spot && token && ownerId && ownerId == spot.ownerId){
+        await spot.destroy();
+        res.json({ message: "Successfully deleted"});
+    }
+    else res.status(404).json({message: "Spot couldn't be found" });
+})
 
 module.exports = router;
 
