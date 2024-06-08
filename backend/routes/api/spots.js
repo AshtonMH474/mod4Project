@@ -161,6 +161,63 @@ router.post('/:spotId/images', async(req,res,next) => {
 })
 
 
+router.put('/:spotId', async(req,res,next) => {
+    const {token} = req.cookies;
+    const decodedPayload = jwt.decode(token);
+
+    let ownerId = decodedPayload.data.id;
+    let spotId = Number(req.params.spotId);
+    let spot = await Spot.findOne({
+        where:{id:spotId},
+        attributes:{exclude:['avgRating', 'numReviews']}
+    });
+
+    if(spot && token && ownerId && ownerId == spot.ownerId){
+        const {address,city,state,country,lat,
+        lng,name,description,price} = req.body;
+
+        try{
+            await spot.update({
+              address:address,
+              city:city,
+              state:state,
+              country:country,
+              lat:lat,
+              lng:lng,
+              name:name,
+              description:description,
+              price:price
+            },{validate:true});
+
+            res.json(spot);
+
+        }catch(err){
+            res.status(400);
+            err.message = "Bad Request";
+            errors = {
+                "address": "Street address is required",
+                "city": "City is required",
+                "state": "State is required",
+                "country": "Country is required",
+                "lat": "Latitude is not valid",
+                "lng": "Longitude is not valid",
+                 "name": "Name must be less than 50 characters",
+                 "description": "Description is required",
+                "price": "Price per day is required"
+            }
+
+            res.json({message:err.message, errors:errors})
+        }
+
+
+    }else{
+       res.status(404);
+       res.json({message:"Spot couldn't be found"});
+    }
+
+})
+
+
 
 module.exports = router;
 
