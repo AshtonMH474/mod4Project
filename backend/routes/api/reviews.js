@@ -80,4 +80,51 @@ router.get('/current', async(req,res) => {
     }
 })
 
+
+router.post('/:reviewId/images', async(req,res) => {
+    const {token} = req.cookies;
+    const decodedPayload = jwt.decode(token);
+
+    let userId = Number(decodedPayload.data.id);
+    let reviewId = req.params.reviewId;
+
+    let review = await Review.findOne({
+        where:{
+            id:Number(reviewId),
+            userId:userId
+        }
+    })
+    if(token && review && userId != NaN){
+
+        const {url} = req.body;
+
+        let allReviewsImages = await Image.findAll({
+            where:{
+                imageableId:review.id
+            }
+        })
+        if(allReviewsImages.length > 10) return res.status(403).json({
+            message: "Maximum number of images for this resource was reached"
+          });
+
+
+         await Image.create({
+            imageableType:'Review',
+            url:url,
+            imageableId: review.id
+        },{validate:true});
+
+        let newImage = await Image.findOne({where:{
+            url:url,
+            imageableType:'Review',
+            imageableId:review.id
+        },
+        attributes:{exclude:['imageableType','imageableId','preview','createdAt','updatedAt']}
+    });
+
+        res.json(newImage);
+
+    }else res.status(404).json({message: "Review couldn't be found"});
+})
+
 module.exports = router;
