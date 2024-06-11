@@ -48,6 +48,7 @@ const reviews = [
 module.exports = {
   async up (queryInterface, Sequelize) {
 
+
     //creates reviews
   let spot1 = await Spot.findOne({where:{address:'123 Disney Lane'}})
   let spot2 = await Spot.findOne({where:{address:'24 Grand Cayon Ave'}})
@@ -169,6 +170,7 @@ module.exports = {
      */
   }
 };
+
 
   async function countReviews(arr){
     let count = 0;
