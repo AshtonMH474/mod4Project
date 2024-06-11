@@ -2,7 +2,7 @@ const express = require('express');
 const { Op} = require('sequelize');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {Spot,Image,User} = require('../../db/models');
+const {Spot,Image,User,Review} = require('../../db/models');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 
 const router = express.Router();
@@ -234,6 +234,49 @@ router.delete('/:spotId', async(req,res,next) => {
     else res.status(404).json({message: "Spot couldn't be found" });
 })
 
+
+router.get('/:spotId/reviews', async(req,res) => {
+    let spotId = Number(req.params.spotId);
+    let spot = await Spot.findOne({where:{id:spotId}});
+    let reviews = await Review.findAll({where:{spotId:spotId}});
+    if(spot){
+        let arr = [];
+        let reviews = await Review.findAll({where:{spotId:spotId}});
+
+        for(let curr of reviews){
+            let user = await User.findOne({where:{id:curr.userId}});
+            let userObj = {
+                id:user.id,
+                firstName:user.firstName,
+                lastName:user.lastName
+            }
+
+            let obj = {
+                id:curr.id,
+                userId:curr.userId,
+                spotId:curr.spotId,
+                review:curr.review,
+                stars:curr.stars,
+                createdAt:curr.createdAt,
+                updatedAt:curr.updatedAt,
+                User:userObj
+            };
+
+            let reviewImages = await Image.findAll({
+                where:{
+                    imageableType:'Review',
+                    imageableId:curr.id
+                },
+                attributes:['id','url']
+            });
+
+            obj.ReviewImages = reviewImages;
+            arr.push(obj);
+        }
+        res.json({Reviews:arr});
+    }else res.status(404).json({message:"Spot couldn't be found"});
+})
+
 module.exports = router;
 
 async function previewImage(spots, arr =[]){
@@ -257,6 +300,7 @@ async function previewImage(spots, arr =[]){
         }
 
         let image = await Image.findOne({where:{
+            imageableType:'Spot',
             preview:true,
             imageableId:el.id
 

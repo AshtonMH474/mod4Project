@@ -114,7 +114,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isNumeric:true,
         notEmpty:true,
-        isDecimal:true
+        isDecimal:true,
       }
     },
     numReviews:{

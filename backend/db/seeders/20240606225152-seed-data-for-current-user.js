@@ -44,12 +44,6 @@ module.exports = {
       validate: true,
     });
 
-    // let spot1 = await Spot.findOne({where:{address:'456 Elm Street'}});
-    // images[0].imageableId = spot1.id;
-
-    // await Image.bulkCreate(images, {
-    //   validate: true,
-    // });
     /**
      * Add seed commands here.
      *
@@ -70,10 +64,7 @@ module.exports = {
     }, {});
 
 
-    // options.tableName = 'Images';
-    // await queryInterface.bulkDelete(options, {
-    //   url: { [Op.in]: ['https://images.pexels.com/photos/20522435/pexels-photo-20522435/free-photo-of-wooden-abandoned-house-in-winter.jpeg?auto=compress&cs=tinysrgb&w=800'] }
-    // }, {});
+
     /**
      * Add commands to revert seed here.
      *
