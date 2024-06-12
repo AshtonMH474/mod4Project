@@ -328,6 +328,7 @@ router.post('/:spotId/reviews', async(req,res) => {
     }else res.status(404).json({message:"Spot couldn't be found"});
 })
 
+
 module.exports = router;
 
 async function previewImage(spots, arr =[]){
