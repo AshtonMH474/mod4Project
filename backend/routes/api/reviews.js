@@ -86,6 +86,8 @@ router.get('/current', async(req,res) => {
 
 router.post('/:reviewId/images', async(req,res) => {
     const {token} = req.cookies;
+
+    if(token){
     const decodedPayload = jwt.decode(token);
 
     let userId = Number(decodedPayload.data.id);
@@ -97,7 +99,7 @@ router.post('/:reviewId/images', async(req,res) => {
             userId:userId
         }
     })
-    if(token && review && userId != NaN){
+    if(review && userId != NaN){
 
         const {url} = req.body;
 
@@ -125,9 +127,10 @@ router.post('/:reviewId/images', async(req,res) => {
         attributes:{exclude:['imageableType','imageableId','preview','createdAt','updatedAt']}
     });
 
-        res.json(newImage);
+        res.status(201).json(newImage);
 
     }else res.status(404).json({message: "Review couldn't be found"});
+}else return res.status(401).json({message:"Authentication required"})
 })
 
 
