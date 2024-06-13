@@ -347,6 +347,8 @@ router.get('/:spotId/reviews', async(req,res) => {
 
 router.post('/:spotId/reviews', async(req,res) => {
     const {token} = req.cookies;
+
+    if(token){
     const decodedPayload = jwt.decode(token);
 
     let userId = decodedPayload.data.id;
@@ -394,6 +396,7 @@ router.post('/:spotId/reviews', async(req,res) => {
     }
 
     }else res.status(404).json({message:"Spot couldn't be found"});
+}return res.status(401).json({message:"Authentication required"})
 })
 
 
