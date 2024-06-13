@@ -125,9 +125,9 @@ router.get('/:spotId', async(req,res,next) => {
 
     if(spot)res.json(spot);
     else{
-        const err = new Error("Spot couldn't be found");
-        err.status = 404;
-        res.json({message:err.message});
+        res.status(404).json({
+            message: "Spot couldn't be found"
+          });
     }
 })
 
@@ -162,7 +162,7 @@ router.post('/', async(req,res,next) => {
         where:{address:address},
         attributes:{exclude:['avgRating', 'numReviews']}
     });
-        res.json(newSpot);
+        res.status(201).json(newSpot);
 
         }catch(err){
         res.status(400);
@@ -182,27 +182,30 @@ router.post('/', async(req,res,next) => {
 
         }
 
-    }
+    }else res.status(401).json({message: "Authentication required"});
 
 })
 
 
 router.post('/:spotId/images', async(req,res,next) => {
     const {token} = req.cookies;
+
+    if(token){
     const decodedPayload = jwt.decode(token);
 
-    let ownerId = decodedPayload.data.id;
+
     let spotId = Number(req.params.spotId);
     let spot = await Spot.findOne({where:{id:spotId}});
+    if(!spot) return res.status(404).json({message:"Spot couldn't be found"});
 
-    if(spot && token && ownerId && ownerId == spot.ownerId){
+    if(spot.ownerId == decodedPayload.data.id){
         const {url, preview} = req.body;
 
 
 
            await Image.create({
             imageableType:'Spot',
-            imageableId: ownerId,
+            imageableId: spotId,
             url:url,
             preview:preview
            },{validate:true});
@@ -212,25 +215,28 @@ router.post('/:spotId/images', async(req,res,next) => {
             attributes:{exclude:['imageableId','imageableType','createdAt','updatedAt']}
            });
 
-           res.json(newImage);
+          return res.status(201).json(newImage);
 
-    }
-   res.status(404).json({message:"Spot couldn't be found"});
+    }else return res.status(403).json({message: "Forbidden"});
+}
+return res.status(401).json({message: "Authentication required"});
 })
 
 
 router.put('/:spotId', async(req,res,next) => {
     const {token} = req.cookies;
+
+    if(token){
     const decodedPayload = jwt.decode(token);
 
-    let ownerId = decodedPayload.data.id;
     let spotId = Number(req.params.spotId);
     let spot = await Spot.findOne({
         where:{id:spotId},
         attributes:{exclude:['avgRating', 'numReviews']}
     });
+    if(!spot)return res.status(404).json({message:"Spot couldn't be found"});
 
-    if(spot && token && ownerId && ownerId == spot.ownerId){
+    if(spot && token && decodedPayload.data.id == spot.ownerId){
         const {address,city,state,country,lat,
         lng,name,description,price} = req.body;
 
@@ -269,9 +275,10 @@ router.put('/:spotId', async(req,res,next) => {
 
 
     }else{
-       res.status(404);
-       res.json({message:"Spot couldn't be found"});
+       res.status(403);
+       res.json({message: "Forbidden"});
     }
+}else res.status(401).json({message: "Authentication required"});
 
 })
 
