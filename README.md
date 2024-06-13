@@ -479,7 +479,7 @@ Create and return a new image for a spot specified by id.
     ```
 
 * Successful Response
-  * Status Code: 200
+  * Status Code: 201
   * Headers:
     * Content-Type: application/json
   * Body:
