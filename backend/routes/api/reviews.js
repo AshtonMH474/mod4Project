@@ -10,11 +10,13 @@ const router = express.Router();
 
 router.get('/current', async(req,res) => {
     const {token} = req.cookies;
+
+    if(token){
     const decodedPayload = jwt.decode(token);
 
     let userId = Number(decodedPayload.data.id);
 
-    if(token && userId != NaN){
+    if(userId != NaN){
         let arr = [];
         let reviews = await Review.findAll({
             where:{userId:userId}
@@ -78,6 +80,7 @@ router.get('/current', async(req,res) => {
         }
         res.json({Reviews:arr});
     }
+}else return res.status(401).json({message:"Authentication required"})
 })
 
 
