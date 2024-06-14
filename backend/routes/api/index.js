@@ -60,6 +60,7 @@ router.delete('/review-images/:imageId', async(req,res) => {
 
 router.delete('/spot-images/:imageId', async(req,res) => {
   const {token} = req.cookies;
+  if(token){
     const decodedPayload = jwt.decode(token);
 
     let userId = Number(decodedPayload.data.id);
@@ -73,19 +74,21 @@ router.delete('/spot-images/:imageId', async(req,res) => {
             imageableType: 'Spot'
         }
     })
+    if(!foundImage) return res.status(404).json({message: "Spot Image couldn't be found"});
 
     let spot = await Spot.findOne({where: {
-        id:foundImage.imageableId,
+        id:Number(foundImage.imageableId),
         ownerId:userId
     }});
 
-    if(token && foundImage && spot){
+    if(foundImage && spot){
       await foundImage.destroy();
       res.json({
         message: "Successfully deleted"
       })
-    }else res.status(404).json({
-      message: "Spot Image couldn't be found"
+    }else return res.status(403).json({
+      message: "Forbidden"
     })
+  }else return res.status(401).json({message:"Authentication required"});
 })
 module.exports = router;
