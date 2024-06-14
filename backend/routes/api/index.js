@@ -28,6 +28,7 @@ router.post('/test', (req, res) => {
 
 router.delete('/review-images/:imageId', async(req,res) => {
   const {token} = req.cookies;
+  if(token){
     const decodedPayload = jwt.decode(token);
 
     let userId = Number(decodedPayload.data.id);
@@ -41,20 +42,23 @@ router.delete('/review-images/:imageId', async(req,res) => {
             imageableType: 'Review'
         }
     })
-
+    if(!foundImage) return res.status(404).json({
+      message: "Review Image couldn't be found"
+    });
     let review = await Review.findOne({where: {
         id:foundImage.imageableId,
         userId:userId
     }});
 
-    if(token && foundImage && review){
+    if(foundImage && review){
       await foundImage.destroy();
-      res.json({
+      return res.json({
         message: "Successfully deleted"
       })
-    }else res.status(404).json({
-      message: "Review Image couldn't be found"
+    }else  return res.status(403).json({
+      message: "Forbidden"
     })
+  }else return res.status(401).json({message:"Authentication required"});
 })
 
 
