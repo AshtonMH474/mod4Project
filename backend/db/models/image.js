@@ -50,13 +50,15 @@ module.exports = (sequelize, DataTypes) => {
      defaultValue:false,
      validate: {
       async count() {
-        let count = await Image.count({where:{
+        let count = 0;
+        let images = await Image.findAll({where:{
           preview:true,
           imageableType:this.imageableType,
           imageableId: this.imageableId
         }});
+        for(let image of images) count++;
 
-        if(count > 1)throw new Error('only one image can be a preview');
+        if(count >= 1 && this.preview == true)throw new Error('only one image can be a preview');
       }
      }
     }
