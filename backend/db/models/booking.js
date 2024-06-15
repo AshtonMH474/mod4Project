@@ -32,7 +32,13 @@ module.exports = (sequelize, DataTypes) => {
     allowNull:false,
     validate: {
       isDate:true,
-      isAfter:"2024-06-10"
+      isTodayOrFuture(value){
+          const currentDate = new Date();
+          if (new Date(value) < currentDate) {
+            throw Error();
+        }
+
+      }
     }
     },
     endDate:{
@@ -40,7 +46,9 @@ module.exports = (sequelize, DataTypes) => {
      allowNull:false,
      validate: {
       isDate:true,
-      isAfter:this.startDate
+      afterStartDate(value){
+        if (new Date(value) <= new Date(this.startDate)) throw Error();
+      }
      }
     }
   }, {
