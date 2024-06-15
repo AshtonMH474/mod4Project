@@ -96,10 +96,10 @@ router.post('/:reviewId/images', async(req,res) => {
     let review = await Review.findOne({
         where:{
             id:Number(reviewId),
-            userId:userId
         }
     })
-    if(review && userId != NaN){
+    if(!review) return res.status(404).json({message: "Review couldn't be found"});
+    if(review && userId == review.userId){
 
         const {url} = req.body;
 
@@ -108,7 +108,8 @@ router.post('/:reviewId/images', async(req,res) => {
                 imageableId:review.id
             }
         })
-        if(allReviewsImages.length > 10) return res.status(403).json({
+        console.log(allReviewsImages.length)
+        if(allReviewsImages.length >= 10) return res.status(403).json({
             message: "Maximum number of images for this resource was reached"
           });
 
@@ -129,7 +130,7 @@ router.post('/:reviewId/images', async(req,res) => {
 
         res.status(201).json(newImage);
 
-    }else res.status(404).json({message: "Review couldn't be found"});
+    }else res.status(403).json({message: "Forbidden"});
 }else return res.status(401).json({message:"Authentication required"})
 })
 

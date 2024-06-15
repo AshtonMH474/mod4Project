@@ -70,27 +70,31 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false
     },
     lat: {
-      type:DataTypes.DECIMAL(10,7),
+      type:DataTypes.FLOAT,
       allowNull:false,
       validate:{
         isNumeric:true,
       notEmpty:true,
-      isDecimal:true
+      isFloat:true,
+      min:-90,
+      max:90
       }
     },
     lng: {
-      type:DataTypes.DECIMAL(10,7),
+      type:DataTypes.FLOAT,
       allowNull:false,
       validate:{
         isNumeric:true,
       notEmpty:true,
-      isDecimal:true
+      isFloat:true,
+      min:-180,
+      max:180
       }
     },
     name:{
       type: DataTypes.STRING,
       validate: {
-        len:[0,25]
+        len:[0,50]
       }
     },
     description:{
@@ -105,10 +109,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isNumeric:true,
         notEmpty:true,
+        min:1
       }
     },
     avgRating: {
-      type: DataTypes.DECIMAL(2,1),
+      type: DataTypes.FLOAT,
       allowNull:false,
       defaultValue:0,
       validate: {

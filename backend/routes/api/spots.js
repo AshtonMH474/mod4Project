@@ -86,7 +86,7 @@ res.json({Spots:obj.Spots,page,size});
 
 router.get('/current', async(req,res,next) => {
     const {token} = req.cookies;
-
+    if(token){
     const decodedPayload = jwt.decode(token);
 
     let currSpots = await Spot.findAll({where:{ownerId:decodedPayload.data.id}});
@@ -97,6 +97,9 @@ router.get('/current', async(req,res,next) => {
     }
 
     res.json(obj);
+}else return res.status(401).json({
+    message: "Authentication required"
+  })
 })
 
 router.get('/:spotId', async(req,res,next) => {
@@ -172,12 +175,12 @@ router.post('/', async(req,res,next) => {
             city: "City is required",
             state: "State is required",
             country: "Country is required",
-            lat: "Latitude is not valid",
-            lng: "Longitude is not valid",
+            lat: "Latitude must be within -90 and 90",
+            lng: "Longitude must be within -180 and 180",
             name: "Name must be less than 50 characters",
             description: "Description is required",
-            price: "Price per day is required"
-      }
+            price: "Price per day must be a positive number"
+          }
         res.json({message:err.message,errors:err.errors});
 
         }
@@ -259,15 +262,16 @@ router.put('/:spotId', async(req,res,next) => {
             res.status(400);
             err.message = "Bad Request";
             errors = {
-                "address": "Street address is required",
-                "city": "City is required",
-                "state": "State is required",
-                "country": "Country is required",
-                "lat": "Latitude is not valid",
-                "lng": "Longitude is not valid",
-                 "name": "Name must be less than 50 characters",
-                 "description": "Description is required",
-                "price": "Price per day is required"
+                    address: "Street address is required",
+                    city: "City is required",
+                    state: "State is required",
+                    country: "Country is required",
+                    lat: "Latitude must be within -90 and 90",
+                    lng: "Longitude must be within -180 and 180",
+                    name: "Name must be less than 50 characters",
+                    description: "Description is required",
+                    price: "Price per day must be a positive number"
+
             }
 
             res.json({message:err.message, errors:errors})
