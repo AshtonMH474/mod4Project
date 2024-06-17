@@ -16,7 +16,7 @@ router.get('/current', async(req,res) => {
 
     let userId = Number(decodedPayload.data.id);
 
-    if(userId != NaN){
+
         let arr = [];
         let reviews = await Review.findAll({
             where:{userId:userId}
@@ -62,7 +62,7 @@ router.get('/current', async(req,res) => {
                 lng:spot.lng,
                 name:spot.name,
                 price:spot.price,
-                previewImage: spotPreviewImage.url
+                // previewImage: spotPreviewImage.url
             }
 
             obj.Spot = spotObj;
@@ -72,14 +72,14 @@ router.get('/current', async(req,res) => {
                     imageableType:'Review',
                     imageableId:curr.id
                 },
-                attributes:['id']
+                attributes:['id','url']
             });
 
             obj.ReviewImages = reviewImages;
             arr.push(obj)
         }
         res.json({Reviews:arr});
-    }
+
 }else return res.status(401).json({message:"Authentication required"})
 })
 
