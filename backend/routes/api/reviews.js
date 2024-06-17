@@ -62,8 +62,10 @@ router.get('/current', async(req,res) => {
                 lng:spot.lng,
                 name:spot.name,
                 price:spot.price,
-                // previewImage: spotPreviewImage.url
+
             }
+            if(spotPreviewImage) spotObj.previewImage = spotPreviewImage.url
+            else spotObj.previewImage = null;
 
             obj.Spot = spotObj;
 
