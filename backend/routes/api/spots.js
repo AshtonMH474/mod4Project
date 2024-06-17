@@ -59,12 +59,6 @@ for(let error in errors){
 
 
 
-
-
-
-
-
-
 let spots = await Spot.findAll(
   {
     where: {
@@ -179,6 +173,7 @@ router.post('/', async(req,res,next) => {
         res.status(201).json(newSpot);
 
         }catch(err){
+
         res.status(400);
         err.message = 'Bad Request'
         err.errors = {
