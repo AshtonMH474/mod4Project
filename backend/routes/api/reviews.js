@@ -72,7 +72,7 @@ router.get('/current', async(req,res) => {
                     imageableType:'Review',
                     imageableId:curr.id
                 },
-                attributes:['id','url']
+                attributes:['id']
             });
 
             obj.ReviewImages = reviewImages;
