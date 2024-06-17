@@ -9,6 +9,65 @@ const booking = require('../../db/models/booking');
 
 const router = express.Router();
 
+router.post('/', async(req,res,next) => {
+    const {token} = req.cookies;
+
+    if(token){
+        const {address, city, state, country,lat,lng,name,
+             description,price } = req.body;
+
+     const decodedPayload = jwt.decode(token);
+
+    let ownerId = decodedPayload.data.id;
+
+    try{
+        await Spot.create({
+        ownerId:ownerId,
+        address:address,
+        city:city,
+        state:state,
+        country:country,
+        lat:lat,
+        lng:lng,
+        name:name,
+        description:description,
+        price:price
+
+        },{validate:true});
+
+
+        let newSpot = await Spot.findOne({
+        where:{address:address},
+        attributes:{exclude:['avgRating', 'numReviews']}
+    });
+        res.status(201).json(newSpot);
+
+        }catch(err){
+            if (err.name === 'SequelizeValidationError') {
+                const errors = err.errors.reduce((acc, error) => {
+                  acc[error.path] = error.message;
+                  return acc;
+                }, {});
+
+        res.status(400);
+        if(errors.address)errors.address = "Street address is required";
+        if(errors.city) errors.city = "City is required";
+        if(errors.state) errors.state = "State is required";
+        if(errors.country) errors.country = "Country is required";
+        if(errors.lat) errors.lat = "Latitude must be within -90 and 90";
+        if(errors.lng) errors.lng = "Longitude must be within -180 and 180";
+        if(errors.name) errors.name = "Name must be less than 50 characters";
+        if(errors.description) errors.description = "Description is required";
+        if(errors.price) errors.price = "Price per day must be a positive number";
+
+
+        res.json({message:"Bad Request",errors:errors});
+            }
+        }
+
+    }else res.status(401).json({message: "Authentication required"});
+
+})
 
 
 router.get('/', async(req,res) => {
@@ -139,61 +198,7 @@ router.get('/:spotId', async(req,res,next) => {
     }
 })
 
-router.post('/', async(req,res,next) => {
-    const {token} = req.cookies;
 
-    if(token){
-        const {address, city, state, country,lat,lng,name,
-             description,price } = req.body;
-
-     const decodedPayload = jwt.decode(token);
-
-    let ownerId = decodedPayload.data.id;
-
-    try{
-        await Spot.create({
-        ownerId:ownerId,
-        address:address,
-        city:city,
-        state:state,
-        country:country,
-        lat:lat,
-        lng:lng,
-        name:name,
-        description:description,
-        price:price
-
-        },{validate:true});
-
-
-        let newSpot = await Spot.findOne({
-        where:{address:address},
-        attributes:{exclude:['avgRating', 'numReviews']}
-    });
-        res.status(201).json(newSpot);
-
-        }catch(err){
-
-        res.status(400);
-        err.message = 'Bad Request'
-        err.errors = {
-            address: "Street address is required",
-            city: "City is required",
-            state: "State is required",
-            country: "Country is required",
-            lat: "Latitude must be within -90 and 90",
-            lng: "Longitude must be within -180 and 180",
-            name: "Name must be less than 50 characters",
-            description: "Description is required",
-            price: "Price per day must be a positive number"
-          }
-        res.json({message:err.message,errors:err.errors});
-
-        }
-
-    }else res.status(401).json({message: "Authentication required"});
-
-})
 
 
 router.post('/:spotId/images', async(req,res,next) => {
@@ -265,22 +270,26 @@ router.put('/:spotId', async(req,res,next) => {
             res.json(spot);
 
         }catch(err){
-            res.status(400);
-            err.message = "Bad Request";
-            errors = {
-                    address: "Street address is required",
-                    city: "City is required",
-                    state: "State is required",
-                    country: "Country is required",
-                    lat: "Latitude must be within -90 and 90",
-                    lng: "Longitude must be within -180 and 180",
-                    name: "Name must be less than 50 characters",
-                    description: "Description is required",
-                    price: "Price per day must be a positive number"
+            if (err.name === 'SequelizeValidationError') {
+                const errors = err.errors.reduce((acc, error) => {
+                  acc[error.path] = error.message;
+                  return acc;
+                }, {});
 
+        res.status(400);
+        if(errors.address)errors.address = "Street address is required";
+        if(errors.city) errors.city = "City is required";
+        if(errors.state) errors.state = "State is required";
+        if(errors.country) errors.country = "Country is required";
+        if(errors.lat) errors.lat = "Latitude must be within -90 and 90";
+        if(errors.lng) errors.lng = "Longitude must be within -180 and 180";
+        if(errors.name) errors.name = "Name must be less than 50 characters";
+        if(errors.description) errors.description = "Description is required";
+        if(errors.price) errors.price = "Price per day must be a positive number";
+
+
+        res.json({message:"Bad Request",errors:errors});
             }
-
-            res.json({message:err.message, errors:errors})
         }
 
 
@@ -396,13 +405,22 @@ router.post('/:spotId/reviews', async(req,res) => {
 
         res.status(201).json(myReview);
     }catch(err){
-        res.status(400).json({
-            message: "Bad Request", // (or "Validation error" if generated by Sequelize),
-            errors: {
-              "review": "Review text is required",
-              "stars": "Stars must be an integer from 1 to 5",
-            }
-        });
+
+
+        if (err.name === 'SequelizeValidationError') {
+            const errors = err.errors.reduce((acc, error) => {
+              acc[error.path] = error.message;
+              return acc;
+            }, {});
+
+    res.status(400);
+    if(errors.review)errors.review = "Review text is required";
+    if(errors.stars) errors.stars = "Stars must be an integer from 1 to 5";
+
+
+    res.json({message:"Bad Request",errors:errors});
+        }
+
     }
 
     }else res.status(404).json({message:"Spot couldn't be found"});
@@ -419,7 +437,7 @@ router.post('/:spotId/bookings', async(req,res) => {
         let spot = await Spot.findOne({where:{id:Number(req.params.spotId)}});
 
         if(!spot)return res.status(404).json({message: "Spot couldn't be found"});
-
+        console.log(userId,spot.ownerId)
         if(spot && spot.ownerId != userId){
             let {startDate, endDate} = req.body;
 
