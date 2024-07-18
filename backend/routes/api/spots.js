@@ -437,7 +437,7 @@ router.post('/:spotId/bookings', async(req,res) => {
         let spot = await Spot.findOne({where:{id:Number(req.params.spotId)}});
 
         if(!spot)return res.status(404).json({message: "Spot couldn't be found"});
-        console.log(userId,spot.ownerId)
+        // console.log(userId,spot.ownerId)
         if(spot && spot.ownerId != userId){
             let {startDate, endDate} = req.body;
 

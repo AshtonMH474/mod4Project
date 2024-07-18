@@ -110,7 +110,7 @@ router.post('/:reviewId/images', async(req,res) => {
                 imageableId:review.id
             }
         })
-        console.log(allReviewsImages.length)
+        // console.log(allReviewsImages.length)
         if(allReviewsImages.length >= 10) return res.status(403).json({
             message: "Maximum number of images for this resource was reached"
           });
