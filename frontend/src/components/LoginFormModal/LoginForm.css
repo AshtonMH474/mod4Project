@@ -1,10 +1,9 @@
-/* * {
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  } */
+  }
 
-  /* Container styling */
    .container {
     display: flex;
     justify-content: center;
@@ -14,7 +13,6 @@
     font-family: Arial, sans-serif;
   }
 
-  /* Form styling */
   form {
     background-color: #ffffff;
     padding: 20px;
