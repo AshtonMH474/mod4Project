@@ -4,3 +4,4 @@ build
 .DS_Store
 *.db
 # 20240605003555-users-demo.js
+!dist
