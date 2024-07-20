@@ -41,8 +41,8 @@ function ProfileButton({ user }) {
   if(showMenu == true){
   return (
     <>
-      <button onClick={toggleMenu}>
-        <CgProfile />
+      <button className="profile" onClick={toggleMenu}>
+        <CgProfile className="profile-logo" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
@@ -76,8 +76,8 @@ function ProfileButton({ user }) {
 }else{
     return (
         <>
-         <button onClick={toggleMenu}>
-             <CgProfile />
+         <button className="profile" onClick={toggleMenu}>
+             <CgProfile className="profile-logo" />
         </button>
         </>
     )
