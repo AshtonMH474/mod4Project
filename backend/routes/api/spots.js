@@ -314,6 +314,7 @@ router.delete('/:spotId', async(req,res,next) => {
     let spot = await Spot.findOne({ where:{id:spotId} });
     if(!spot) return res.status(404).json({message: "Spot couldn't be found" });
     if(token && decodedPayload.data.id == spot.ownerId){
+        console.log(decodedPayload.data.id)
         await spot.destroy();
         return res.json({ message: "Successfully deleted"});
     }

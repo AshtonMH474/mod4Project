@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 
         User.hasMany(models.Image, {
           foreignKey: 'imageableId',
+          onDelete:'CASCADE',
           constraints: false,
           scope: {
             imageableType: 'User'
