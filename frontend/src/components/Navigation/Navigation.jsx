@@ -11,9 +11,10 @@ function Navigation({ isLoaded }) {
     <ul className='top'>
       <li >
         <NavLink to="/"><img className='logo' src='https://i.pinimg.com/736x/3c/bf/be/3cbfbe148597341fa56f2f87ade90956.jpg' alt='airbnb'/></NavLink>
+
       </li>
       {isLoaded && (
-        <li className='profile' >
+        <li  >
           <ProfileButton user={sessionUser}  />
         </li>
       )}
