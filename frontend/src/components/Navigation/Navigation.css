@@ -1,6 +1,21 @@
-/* *{
-    background-color: red;
-} */
+.buttonProfile{
+    width:100%;
+    padding: 10px;
+    background-color: #FF5A5F;
+    color: #ffffff;
+    border: none;
+
+    cursor: pointer;
+    font-size: 16px;
+}
+.boxProfile{
+    position: relative;
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: 10px;
+    height: auto;
+    width: 100px;
+}
 
 .logo{
     position: absolute;
@@ -20,9 +35,12 @@
 }
 
 .profile{
-
     height: 50px;
     width: 50px;
+
+}
+.profile:hover{
+    cursor: pointer;
 }
 .profile-logo{
     width: 100%;

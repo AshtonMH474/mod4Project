@@ -8,6 +8,7 @@
 
 }
 
+
 .row{
     display: grid;
     grid-template-columns: repeat(4,1fr);
@@ -28,3 +29,26 @@
     position: relative;
     top:2px
 }
+
+p {
+    font-size: 14px;
+    font-family: sans-serif;
+}
+
+.price{
+    font-weight: bold;
+    padding-right: 3px;
+}
+.pricing{
+    display: inline-flex;
+    position: relative;
+    bottom: 20px;
+}
+
+  .tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+  }

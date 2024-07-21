@@ -41,41 +41,47 @@ function ProfileButton({ user }) {
   if(showMenu == true){
   return (
     <>
+
       <button className="profile" onClick={toggleMenu}>
         <CgProfile className="profile-logo" />
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <div className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
+          <div className="boxProfile">
+            <div>{user.username}</div>
+            <div>{user.firstName} {user.lastName}</div>
+            <div>{user.email}</div>
+            <div>
               <button onClick={logout}>Log Out</button>
-            </li>
+            </div>
+            </div>
           </>
         ) : (
           <>
-            <li>
+            <div className="boxProfile">
+            <div >
               <OpenModalButton
                 buttonText="Log In"
                 modalComponent={<LoginFormModal />}
               />
-            </li>
-            <li>
+            </div>
+            <div>
               <OpenModalButton
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}
               />
-            </li>
+            </div>
+            </div>
           </>
         )}
-      </ul>
+      </div>
     </>
   );
 }else{
     return (
         <>
+
          <button className="profile" onClick={toggleMenu}>
              <CgProfile className="profile-logo" />
         </button>
