@@ -2,6 +2,8 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAirbnb } from '@fortawesome/free-brands-svg-icons';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
@@ -10,7 +12,11 @@ function Navigation({ isLoaded }) {
     <div >
     <ul className='top'>
       <li >
-        <NavLink to="/"><img className='logo' src='https://i.pinimg.com/736x/3c/bf/be/3cbfbe148597341fa56f2f87ade90956.jpg' alt='airbnb'/></NavLink>
+
+        <div>
+        <NavLink to="/"><FontAwesomeIcon className='logo' icon={faAirbnb}  /></NavLink>
+        <NavLink className='logoName' to="/">airbnb</NavLink>
+        </div>
 
       </li>
       {isLoaded && (

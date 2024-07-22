@@ -36,8 +36,8 @@ function Home() {
 
                   <div className="location">
                     <p>{spot.city}, {spot.state}</p>
-
-                    <p><CiStar className="star"/>{spot.avgRating}</p>
+                    {spot.avgRating > 0 && ( <p><CiStar className="star"/>{spot.avgRating}</p>)}
+                    {spot.avgRating <= 0 && ( <p><CiStar className="star"/>New</p>)}
 
                   </div>
                   <div className="pricing">
