@@ -1,5 +1,6 @@
-import { CgProfile } from "react-icons/cg";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAddressCard } from "@fortawesome/free-regular-svg-icons";
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
@@ -42,9 +43,11 @@ function ProfileButton({ user }) {
   return (
     <>
 
-      <button className="profile" onClick={toggleMenu}>
-        <CgProfile className="profile-logo" />
-      </button>
+
+
+      <div className="profile" onClick={toggleMenu}>
+             <FontAwesomeIcon className="profile-logo" icon={faAddressCard} />
+             </div>
       <div className={ulClassName} ref={ulRef}>
         {user ? (
           <>
@@ -53,7 +56,7 @@ function ProfileButton({ user }) {
             <div>{user.firstName} {user.lastName}</div>
             <div>{user.email}</div>
             <div>
-              <button onClick={logout}>Log Out</button>
+              <button className="buttonProfile" onClick={logout}>Log Out</button>
             </div>
             </div>
           </>
@@ -82,9 +85,12 @@ function ProfileButton({ user }) {
     return (
         <>
 
-         <button className="profile" onClick={toggleMenu}>
-             <CgProfile className="profile-logo" />
-        </button>
+
+
+             <div className="profile" onClick={toggleMenu}>
+             <FontAwesomeIcon className="profile-logo" icon={faAddressCard} />
+             </div>
+
         </>
     )
 }
