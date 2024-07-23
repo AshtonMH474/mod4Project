@@ -41,6 +41,8 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    box-shadow: 0px 5px 5px 1px #484848;
+
   }
 
   .buttonL:hover  {
@@ -51,4 +53,15 @@
     color: red;
     margin-top: 5px;
     padding-bottom: 20px;
+  }
+  .demoBox{
+    padding: 20px;
+  }
+  .demo{
+    text-decoration: underline;
+    font-size: large;
+    text-align: center;
+    cursor: pointer;
+    color:#00525E;
+
   }
