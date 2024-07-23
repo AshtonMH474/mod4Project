@@ -49,6 +49,7 @@ p {
     position: absolute;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
+    font-size: 16px;
     padding: 5px;
     border-radius: 4px;
   }

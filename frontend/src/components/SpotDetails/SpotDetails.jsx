@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { CiStar } from "react-icons/ci";
 import { useParams } from "react-router-dom";
 import { detailsOfSpot } from "../../store/spots";
+import './SpotDetails.css'
 
  function SpotDetails (){
     const {spotId} = useParams();
@@ -32,34 +33,55 @@ import { detailsOfSpot } from "../../store/spots";
 
 return (
     <>
-    <h1>{spot.name}</h1>
-    <p>{spot.city}, {spot.state}, {spot.country}</p>
-
-    <div>
-    <img src={preview.url} alt='preview'/>
-    {imageArray.map((image) => (
-    <img key={image.id} src={image.url} alt='image' />
-    ))}
+    <div className="spotContainer">
+        <div className="spotInfo">
+    <h2 className="spotH2">{spot.name}</h2>
+    <p className="spotLocation">{spot.city}, {spot.state}, {spot.country}</p>
+        </div>
+    <div className="images">
+        <div className="spotPreview">
+        <img className="previewDetails" src={preview.url} alt='preview'/>
+        </div>
+        {imageArray.map((image) => (
+        <div  key={image.id} className="spotImage">
+        <img className="currImage" key={image.id} src={image.url} alt='image' />
+        </div>
+        ))}
     </div>
 
-    <div>
-        <h2>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h2>
-        <p>
+        <div className="ownerD">
+        <h2 className="spotName">Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h2>
+        <p className="spotD">
         {spot.description}
         </p>
-        <div>
-        {spot.avgStarRating > 0 && ( <div><CiStar className="star"/>{spot.avgStarRating}</div>)}
-        {spot.avgStarRating <= 0 && ( <div><CiStar className="star"/>New</div>)}
-            <div>
-                ${spot.price} night
-            </div>
-             <div>
+        </div>
+
+        <div className="spotRating">
+            <div id='avgReview'>
+             {spot.avgStarRating > 0 && ( <div className="avg" ><CiStar className="star"/>{spot.avgStarRating}</div>)}
+            {spot.avgStarRating <= 0 && ( <div className="avg"><CiStar className="star"/>New</div>)}
+
+             <div className="spotReview">
                 {spot.numReviews} reviews
             </div>
-            <button>
+
+            </div>
+
+            <div className="spotPricing">
+            <div className='pricing'>
+                <div id="spotPrice">${spot.price}</div>
+                <div id='night'>night</div>
+            </div>
+            </div>
+
+
+            <div className="buttonR">
+            <button className="reserve">
                 Reserve
             </button>
+            </div>
         </div>
+
     </div>
     </>
 )
