@@ -25,13 +25,20 @@ function LoginFormModal() {
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
-        console.log(data)
+
         if (data && data.message) {
           setErrors(data.message);
         }
       });
 
   };
+
+  const demoUser = () => {
+    let credential = 'demo@user.io'
+   let  password = 'password'
+    dispatch(sessionActions.login({ credential, password}))
+    .then(closeModal)
+  }
 
   return (
     <>
@@ -59,8 +66,11 @@ function LoginFormModal() {
             required
           />
         </label>
-        {disabled == true &&  (<button style={{backgroundColor:'#484848'}} disabled={disabled} className='buttonL'  type="submit">Log In</button>)}
+        {disabled == true &&  (<button style={{backgroundColor:'#484848',cursor:'default'}} disabled={disabled} className='buttonL'  type="submit">Log In</button>)}
         {disabled == false && (<button style={{}} disabled={disabled} className='buttonL'  type="submit">Log In</button>)}
+        <div className='demoBox'>
+        <div className='demo' onClick={demoUser} type='submit'>Demo User</div>
+        </div>
       </form>
     </>
   );
