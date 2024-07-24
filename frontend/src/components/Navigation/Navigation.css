@@ -62,6 +62,25 @@ div .boxProfile{
     justify-content: space-between;
     padding: 25px;
 }
+.newSpot{
+position: relative;
+right: 100px;
+top: 35px;
+}
+.newSpotLink{
+    text-decoration: none;
+    color: #00525E ;
+    cursor: pointer;
+
+}
+.relativePosition{
+    position: relative;
+    bottom: 15px;
+}
+.groupLinks{
+    position: relative;
+    top:3px
+}
 
 .profile{
     position: relative;
@@ -72,6 +91,7 @@ div .boxProfile{
     justify-content: center;
 
 }
+
 
 
 .profile-logo{
