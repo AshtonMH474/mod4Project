@@ -13,10 +13,12 @@
 function Home() {
     const dispatch = useDispatch();
     const spots = useSelector((state) => state.spots);
+
     const spotsArray = Object.values(spots);
 
       useEffect(() => {
         dispatch(getAllSpots());
+
       }, [dispatch]);
 
       return (

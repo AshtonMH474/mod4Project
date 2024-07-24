@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Outlet, createBrowserRouter, RouterProvider } from 'react-router-dom';
-// import LoginFormPage from './components/LoginFormPage';
-// import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
 import * as sessionActions from './store/session';
 import Home from './components/Home';
 import SpotDetails from './components/SpotDetails';
+import SpotForm from './components/NewSpot';
+
+
 
 function Layout() {
   const dispatch = useDispatch();
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path:'/spots/:spotId',
         element:<SpotDetails/>
+      },
+      {
+        path:'/spots/new',
+        element:<SpotForm/>
       }
     ]
   }
