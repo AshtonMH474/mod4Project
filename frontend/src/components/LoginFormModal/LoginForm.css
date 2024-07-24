@@ -1,7 +1,6 @@
 
 
 
-
   .containerF {
     background-color: #ffffff;
     padding: 20px;
@@ -17,7 +16,7 @@
     text-align: center;
   }
 
-  label .login {
+   .login {
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
