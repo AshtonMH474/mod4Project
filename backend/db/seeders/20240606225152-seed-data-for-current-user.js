@@ -19,7 +19,7 @@ const spots = [
     lat: 34.052235,
     lng: -118.243683,
     name: "CodeCamp",
-    description: "Leading coding bootcamp",
+    description: "Leading coding bootcamp jvjfgjgng ghgntgjt gkgtngt mgtgtkg gktgktgmtg gmgktgmkgt mkgtkg kgtmktgtk kgtkmtk kgmg gkmgg gmgg kmgm gg gg gg gg gg gg gg gg gg gg ggg ggg gg g g ggggrgmktgtg gtjgmtkg gktgktkm",
     price: 150,
     avgRating: 4.8
   },
