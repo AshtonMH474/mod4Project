@@ -1,0 +1,19 @@
+.newSpotForm{
+position: absolute;
+/* top:50%; */
+left: 42%;
+/* text-align: center; */
+font-family: sans-serif;
+width: 500px;
+padding: 20px;
+/* border: black 1px solid; */
+
+}
+.createSpot{
+    background-color: #FF5A5F;
+    color: white;
+    cursor: pointer;
+}
+.createSpot:hover{
+    background-color:#484848; ;
+}
