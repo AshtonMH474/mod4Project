@@ -1,19 +1,115 @@
 .newSpotForm{
 position: absolute;
-/* top:50%; */
-left: 42%;
-/* text-align: center; */
+left: 40%;
 font-family: sans-serif;
 width: 500px;
 padding: 20px;
-/* border: black 1px solid; */
-
 }
+
+
+.newSpotForm input{
+    background-color: #E8F0FE
+}
+
+
 .createSpot{
     background-color: #FF5A5F;
+    box-shadow: 0px 2px 2px 1px #484848;
     color: white;
     cursor: pointer;
+    border-radius: 8px;
+    position: relative;
+    left:40%;
+    top:10px;
 }
 .createSpot:hover{
     background-color:#484848; ;
+}
+
+div.aboveL{
+    padding-bottom: 20px;
+}
+
+.newSpotForm h2{
+   position: relative;
+   top:10px
+}
+.newSpotForm label{
+   position: relative;
+   bottom: 5px;
+}
+#borderNew{
+    border-bottom: 1px black solid;
+}
+#borderNew div{
+    font-size: 16px;
+}
+.description{
+    border-bottom: 1px black solid;
+}
+.description div{
+    font-size: 16px;
+}
+.description textarea{
+    height: 100px;
+    width: 95%;
+    max-width: 95%;
+    min-width: 95%;
+}
+
+
+.locationSpot{
+    display: flex;
+}
+
+
+.state{
+    position: relative;
+    bottom: 10px;
+}
+.state input{
+    width: 50px;
+    position: relative;
+    left: 10px;
+}
+
+.state label{
+    position: relative;
+    left: 10px;
+}
+
+.city{
+    position: relative;
+    left: 5px;
+    bottom: 10px;
+    width:450px
+}
+.city input{
+    position: relative;
+    right: 5px;
+}
+
+.address{
+padding-bottom: 10px;
+}
+
+.locationLL{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.lat{
+    position: relative;
+    bottom: 30px;
+    /* width: 220px; */
+}
+
+
+.long{
+    position: relative;
+    bottom: 30px;
+    right: 15px;
+    padding-left: 30px;
+
 }
