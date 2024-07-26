@@ -27,7 +27,7 @@ function SpotForm(){
     const sessionUser = useSelector(state => state.session.user);
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         setErrors({});
@@ -66,8 +66,11 @@ function SpotForm(){
             description:description,
             price:money
         };
-        const result =  dispatch(createSpot(images,spot))
-        .catch(async(res) => {
+        try{
+        const result = await dispatch(createSpot(images,spot))
+        console.log(result)
+        navigate(`/spots/${result.id}`);
+        }catch(res) {
             console.log(res)
             if(res){
              let data = await res.json();
@@ -88,8 +91,7 @@ function SpotForm(){
 
             }
         }
-        })
-        navigate(`spots/${result.id}`);
+        }
 
     }
 
