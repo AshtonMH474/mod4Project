@@ -55,7 +55,7 @@ export const createSpot = (images,payload) => async (dispatch) => {
         body:JSON.stringify(payload)
     });
 
-    console.log(await res.json())
+
 
     if(res.ok){
         const spot = await res.json();
