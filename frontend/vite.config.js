@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => ({
   ],
   server: {
     proxy: {
-      '/api': 'http://localhost:8004'
+      '/api': 'http://localhost:8009'
     },
   }
 }));
