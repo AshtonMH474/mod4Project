@@ -2,12 +2,13 @@
     font-family: sans-serif;
 }
 .buttonProfile{
+    position: relative;
     box-sizing: border-box;
     width:100%;
     background-color: #FF5A5F;
     color: #ffffff;
     border: none;
-
+    z-index: 2;
     cursor: pointer;
     font-size: 16px;
 }

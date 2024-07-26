@@ -21,7 +21,7 @@ const spots = [
     name: "CodeCamp",
     description: "Leading coding bootcamp jvjfgjgng ghgntgjt gkgtngt mgtgtkg gktgktgmtg gmgktgmkgt mkgtkg kgtmktgtk kgtkmtk kgmg gkmgg gmgg kmgm gg gg gg gg gg gg gg gg gg gg ggg ggg gg g g ggggrgmktgtg gtjgmtkg gktgktkm",
     price: 150,
-    avgRating: 4.8
+
   },
 ]
 
