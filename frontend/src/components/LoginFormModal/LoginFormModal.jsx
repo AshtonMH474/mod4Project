@@ -42,7 +42,7 @@ function LoginFormModal() {
 
   return (
     <>
-
+      <div className='loginContainer'>
       <h1 className='loginH1'>Log In</h1>
       <form className='containerF' onSubmit={handleSubmit}>
       {errors.length && (
@@ -72,6 +72,7 @@ function LoginFormModal() {
         <div className='demo' onClick={demoUser} type='submit'>Demo User</div>
         </div>
       </form>
+      </div>
     </>
   );
 }

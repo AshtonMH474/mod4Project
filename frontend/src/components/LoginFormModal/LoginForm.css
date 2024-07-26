@@ -1,6 +1,5 @@
 
 
-
   .containerF {
     background-color: #ffffff;
     padding: 20px;
@@ -18,12 +17,16 @@
 
    .login {
     display: block;
+    position: relative;
     margin-bottom: 10px;
     font-weight: bold;
+
   }
 
   input[type="text"],
   input[type="password"]{
+    position: relative;
+    z-index: 3;
     width: 93%;
     padding: 8px;
     margin-bottom: 15px;

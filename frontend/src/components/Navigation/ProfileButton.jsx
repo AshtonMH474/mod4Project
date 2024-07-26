@@ -7,8 +7,10 @@ import * as sessionActions from '../../store/session';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { useNavigate } from "react-router-dom";
 
 function ProfileButton({ user }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -17,6 +19,8 @@ function ProfileButton({ user }) {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
     setShowMenu(!showMenu);
   };
+
+
 
   useEffect(() => {
     if (!showMenu) return;
@@ -36,6 +40,8 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     setShowMenu(false)
+    navigate('/')
+
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
