@@ -22,7 +22,8 @@ import CreateReview from "../CreateReview";
         const getData = async () => {
             dispatch(detailsOfSpot(spotId));
            const reviews = await dispatch(reviewsForSpot(spotId))
-           console.log(reviews)
+        //    console.log(reviews)
+        //    console.log(spot)
            setReviewList(Object.values(reviews));
         }
 
@@ -35,6 +36,7 @@ import CreateReview from "../CreateReview";
         await dispatch(detailsOfSpot(spotId));
         const reviewsData = await dispatch(reviewsForSpot(spotId));
         setReviewList(Object.values(reviewsData));
+        console.log(reviewList)
       };
 
 
@@ -87,8 +89,11 @@ return (
              {spot.avgStarRating > 0 && ( <div className="avg" ><CiStar className="star"/>{spot.avgStarRating}</div>)}
              {spot.avgStarRating <= 0 && ( <div className="avgNew"><CiStar className="starNew"/>New</div>)}
 
-             {spot.numReviews > 0 && (<div className="spotReview">
+             {spot.numReviews > 1 && (<div className="spotReview">
                 {spot.numReviews} reviews
+            </div>)}
+            {spot.numReviews == 1 && (<div className="spotReview">
+                {spot.numReviews} review
             </div>)}
 
             </div>
@@ -116,8 +121,11 @@ return (
         {spot.avgStarRating > 0 && ( <h2 id="starReview"> <CiStar className="starTop" />{spot.avgStarRating}</h2>)}
         {spot.avgStarRating <= 0 && ( <h2 id="starReview"><CiStar className="starTop"/>New</h2>)}
 
-         {spot.numReviews > 0 && (<h2 id='reviewNum'>
+         {spot.numReviews > 1 && (<h2 id='reviewNum'>
                 {spot.numReviews} reviews
+            </h2>)}
+            {spot.numReviews == 1 && (<h2 id='reviewNum'>
+                {spot.numReviews} review
             </h2>)}
         </div>
 
@@ -129,8 +137,11 @@ return (
 
             )}
 
+{spot.Owner.id != sessionUser.id && spot.avgStarRating <= 0 && (<p>Be the first to post a review!</p>)}
+
+
         <div className="allReviews">
-            {reviewList.map((review) => (
+            {reviewList.slice().reverse().map((review) => (
                 <div className="currReview" key={review.id}>
 
                {review.User ? (
@@ -138,6 +149,7 @@ return (
                 <h3 className="nameReview">{review.User.firstName}</h3>
                <h3 className="dateReview">{formatDate(review.createdAt)}</h3>
                <p className="reviewContent">{review.review}</p>
+               {review.User.id == sessionUser.id && (<button className="deleteReview">Delete</button>)}
                </>
             ):(
                 <p>Loading...</p>

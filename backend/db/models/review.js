@@ -39,15 +39,16 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.TEXT,
     allowNull:false,
     validate: {
-      // notEmpty:true,
+      notEmpty:true,
+      len:[10,Infinity]
     }
     },
     stars:{
      type:DataTypes.INTEGER,
      allowNull:false,
      validate: {
-      // min:1,
-      // max:5
+      min:1,
+      max:5
      }
     }
   }, {

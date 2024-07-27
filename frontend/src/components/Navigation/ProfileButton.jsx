@@ -61,7 +61,7 @@ function ProfileButton({ user }) {
             <div>Hello, {user.firstName}</div>
             <div>{user.email}</div>
             <div>
-                <button className="buttonProfile">Manage Spots</button>
+                <button className="buttonProfile" onClick={() => navigate('spots/current')}>Manage Spots</button>
             </div>
             <div>
               <button className="buttonProfile" onClick={logout}>Log Out</button>

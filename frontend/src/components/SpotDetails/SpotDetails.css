@@ -225,3 +225,7 @@ padding-top: 7px;
 .CreateReview:hover{
     background-color: #484848;
 }
+.deleteReview{
+    background-color: #484848;
+    color: white;
+}
