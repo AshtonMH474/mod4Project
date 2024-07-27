@@ -30,8 +30,8 @@ function CreateReview({spotId,refresh}){
         } catch (res) {
             if(res){
           const data = await res.json();
-          if (data && data.message) {
-            setErrors(data.message);
+          if (data && data.errors) {
+            setErrors(data.errors);
           }
         }
         }
@@ -39,7 +39,7 @@ function CreateReview({spotId,refresh}){
 
     useEffect(() => {
        if(review.length < 10 || rating < 1) setDisable(true)
-        if(review.length > 10 && rating > 0 ) setDisable(false)
+        if(review.length >= 10 && rating > 0 ) setDisable(false)
 
 
     },[setDisable,rating,review])
@@ -47,8 +47,12 @@ function CreateReview({spotId,refresh}){
           <>
       <div className='createReviewContainer'>
       <h1 className='stay'>How was your stay?</h1>
-      {errors.length && (
-          <div className='reviewError'>{errors.message}</div>
+      {errors.review && (
+          <div className='reviewError'>{errors.review}</div>
+        )}
+
+        {errors.stars && (
+          <div className='reviewError'>{errors.stars}</div>
         )}
       <form className='createReviewForm' onSubmit={handleSubmit}>
 

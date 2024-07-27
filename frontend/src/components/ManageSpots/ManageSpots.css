@@ -1,0 +1,66 @@
+.manageSpotContainer{
+    position: relative;
+    left: 3%;
+}
+.mySpots{
+
+    position: relative;
+    right: 2%;
+    display: grid;
+    padding-top: 50px;
+    grid-template-columns: repeat(4,1fr);
+}
+
+#currSpot{
+    padding-left: 20px;
+    padding-bottom: 20px;
+    width: 85%;
+}
+.locationMySpots{
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.starMySpot{
+    position: relative;
+    top: 2px;
+}
+.pricesForMySpots{
+    padding-top: 10px;
+}
+
+.night{
+    position: relative;
+    left:11%;
+    bottom:18px
+}
+#priceMySpots{
+    font-weight: bold;
+}
+.buttonsMySpots{
+    display: flex;
+}
+.buttonsMySpots div{
+padding-right: 20px;
+}
+.buttonsMySpots div button{
+    background-color: #FF5A5F;
+    box-shadow: 0px 1px 1px 1px #484848;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+}
+.buttonsMySpots div button:hover{
+    background-color: #484848;;
+}
+
+.ManageCreate{
+    background-color: #FF5A5F;
+    box-shadow: 0px 1px 1px 1px #484848;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+}
+.ManageCreate:hover{
+    background-color: #484848;
+}

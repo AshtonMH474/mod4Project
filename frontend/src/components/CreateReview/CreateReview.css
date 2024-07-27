@@ -66,4 +66,6 @@ input[type='review']::placeholder{
 
 .reviewError{
     color:red;
+    text-align: center;
+    padding-bottom: 10px;
 }
