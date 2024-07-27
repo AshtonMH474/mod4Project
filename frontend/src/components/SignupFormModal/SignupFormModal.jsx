@@ -19,7 +19,8 @@ function SignupFormModal() {
 
   useEffect(() => {
     if(email.length && username.length && firstName.length && lastName.length && password.length && confirmPassword.length) setDisable(false);
-    if(!email.length || !username.length || !firstName.length || !lastName.length || !password.length || !confirmPassword.length) setDisable(true);
+    if(!email.length || !username.length || !firstName.length || !lastName.length || !password.length || !confirmPassword.length || password.length < 6 || username.length < 4) setDisable(true);
+
 
   },[setDisable,email,username,firstName,lastName,password,confirmPassword]);
 

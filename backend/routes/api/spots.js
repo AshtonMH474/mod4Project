@@ -395,6 +395,17 @@ router.post('/:spotId/reviews', async(req,res) => {
             stars:stars
         },{validate:true});
 
+
+        let reviewsForSpot = await Review.findAll({where:{spotId:spot.id}});
+        let numReviewsSpot = await countReviews(reviewsForSpot);
+        let average = await averageRating(reviewsForSpot);
+        average = round(average,1);
+
+        await spot.update({
+            numReviews: numReviewsSpot,
+            avgRating:average
+          });
+
         let myReview = await Review.findOne({
             where:{
                 userId:user.id,
@@ -586,4 +597,39 @@ async function previewImage(spots, arr =[]){
 
     }
     return arr;
+}
+
+
+
+
+async function countReviews(arr){
+    let count = 0;
+
+    for(let spot of arr){
+      count++
+    }
+
+    return count;
+  }
+
+
+  async function averageRating(reviews, arr = []){
+    let spot = await Spot.findOne({where:{id:reviews[0].spotId}});
+    if(spot.avgRating != 0) arr.push(spot.avgRating);
+
+    let count = 0;
+    for(let spot of reviews){
+      arr.push(spot.stars);
+    }
+
+    for(let curr of arr){
+      count += curr;
+    }
+
+    return count/arr.length
+
+  }
+  function round(value, decimalPlace) {
+    let multiplier = Math.pow(10, decimalPlace || 0);
+    return Math.round(value * multiplier) / multiplier;
 }

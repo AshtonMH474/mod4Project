@@ -1,23 +1,41 @@
 import { useDispatch,useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CiStar } from "react-icons/ci";
 import { useParams } from "react-router-dom";
 import { detailsOfSpot } from "../../store/spots";
 import './SpotDetails.css'
 import { reviewsForSpot } from "../../store/reviews";
+import OpenModalButton from "../OpenModalButton";
+import CreateReview from "../CreateReview";
 
  function SpotDetails (){
     const {spotId} = useParams();
     const dispatch = useDispatch();
     const spot = useSelector((state) => state.spots);
-    const reviews = useSelector((state) => state.reviews)
-    // console.log(reviews)
+    // const reviews = useSelector((state) => state.reviews)
+    const sessionUser = useSelector(state => state.session.user);
+    const [reviewList, setReviewList] = useState([]);
+
+
 
       useEffect(() => {
-       dispatch(detailsOfSpot(spotId));
-       dispatch(reviewsForSpot(spotId))
+        const getData = async () => {
+            dispatch(detailsOfSpot(spotId));
+           const reviews = await dispatch(reviewsForSpot(spotId))
+           console.log(reviews)
+           setReviewList(Object.values(reviews));
+        }
+
+        getData();
 
       }, [dispatch,spotId]);
+
+      const handleModalClose = async () => {
+        // Refresh the reviews and spot details
+        await dispatch(detailsOfSpot(spotId));
+        const reviewsData = await dispatch(reviewsForSpot(spotId));
+        setReviewList(Object.values(reviewsData));
+      };
 
 
       const formatDate = (dateString) => {
@@ -29,11 +47,14 @@ import { reviewsForSpot } from "../../store/reviews";
 
     let preview = spot.SpotImages.find((image) => image.preview == true);
     let imageArray = spot.SpotImages.filter((image) => image.preview == false);
-    let reviewsArray = Object.values(reviews);
-    console.log(reviewsArray)
+    let presentReview = reviewList.find((review) => sessionUser.id ==  review.userId)
+
+
+
 
 return (
     <>
+
     <div className="spotContainer">
         <div className="spotInfo">
     <h2 className="spotH2">{spot.name}</h2>
@@ -100,16 +121,33 @@ return (
             </h2>)}
         </div>
 
+        {sessionUser && !presentReview && spot.Owner.id != sessionUser.id && (
+             <OpenModalButton  className='CreateReview'
+             buttonText="Create your Review"
+             modalComponent={<CreateReview spotId={spotId} refresh={handleModalClose} />}
+           />
+
+            )}
+
         <div className="allReviews">
-            {reviewsArray.map((review) => (
+            {reviewList.map((review) => (
                 <div className="currReview" key={review.id}>
-               <h3 className="nameReview">{review.User.firstName}</h3>
+
+               {review.User ? (
+                <>
+                <h3 className="nameReview">{review.User.firstName}</h3>
                <h3 className="dateReview">{formatDate(review.createdAt)}</h3>
                <p className="reviewContent">{review.review}</p>
+               </>
+            ):(
+                <p>Loading...</p>
+            )}
                </div>
             ))}
 
         </div>
+
+
     </div>
     </>
 )
