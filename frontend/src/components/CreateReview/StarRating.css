@@ -1,0 +1,18 @@
+.star-rating {
+    display: flex;
+  }
+
+  .star2 {
+    font-size: 60px;
+    color: lightgray;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .star2.filled {
+    color: black;
+  }
+
+  .star2:hover {
+    color: orange;
+  }

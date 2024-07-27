@@ -28,6 +28,9 @@
     overflow: auto;
 
 }
+.boxProfile div{
+    border-bottom: 2px solid black;
+}
 div .boxProfile{
     box-sizing: border-box;
 

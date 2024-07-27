@@ -39,16 +39,15 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.TEXT,
     allowNull:false,
     validate: {
-      notEmpty:true
+      // notEmpty:true,
     }
     },
     stars:{
      type:DataTypes.INTEGER,
      allowNull:false,
-     //fix migration
      validate: {
-      min:1,
-      max:5
+      // min:1,
+      // max:5
      }
     }
   }, {
