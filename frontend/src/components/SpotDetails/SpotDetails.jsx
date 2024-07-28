@@ -42,10 +42,10 @@ import CreateReview from "../CreateReview";
       };
 
 
-    //   const formatDate = (dateString) => {
-    //     const date = new Date(dateString);
-    //     return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    //   };
+      const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      };
 
     if(!spot.SpotImages) return <div>Loading...</div>;
 
@@ -137,12 +137,6 @@ return (
                 {spot.numReviews} review
             </h2>)}
         </div>
-        {sessionUser && !presentReview && spot.ownerId != sessionUser.id && (
-              <OpenModalButton  className='CreateReview'
-           buttonText="Create your Review"
-            modalComponent={<CreateReview spotId={spotId} refresh={handleModalClose} />}
-           />
-        )}
 
              {sessionUser && !presentReview && spot.ownerId != userId && (
               <OpenModalButton  className='CreateReview'
@@ -159,6 +153,29 @@ return (
 
             </div>
 
+
+            <div className="allReviews">
+                {reviewList.slice().reverse().map((review) => (
+                <div className="currReview" key={review.id}>
+
+                 {review.User ? (
+                <>
+                    <h3 className="nameReview">{review.User.firstName}</h3>
+                <h3 className="dateReview">{formatDate(review.createdAt)}</h3>
+                <p className="reviewContent">{review.review}</p>
+                {sessionUser && review.User.id == userId && (<button className="deleteReview">Delete</button>)}
+                </>
+                ):(
+                    <p>Loading...</p>
+                )}
+                </div>
+                ))}
+
+        </div>
+
+
+
+
     </>
 )
 
@@ -169,28 +186,7 @@ return (
 
 
 
-//         <div className="allReviews">
-//             {reviewList.slice().reverse().map((review) => (
-//                 <div className="currReview" key={review.id}>
 
-//                {review.User ? (
-//                 <>
-//                 <h3 className="nameReview">{review.User.firstName}</h3>
-//                <h3 className="dateReview">{formatDate(review.createdAt)}</h3>
-//                <p className="reviewContent">{review.review}</p>
-//                {review.User.id == sessionUser.id && (<button className="deleteReview">Delete</button>)}
-//                </>
-//             ):(
-//                 <p>Loading...</p>
-//             )}
-//                </div>
-//             ))}
-
-//         </div>
-
-
-//     </div>
-    // </>
 // )
 }
 
