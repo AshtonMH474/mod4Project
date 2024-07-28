@@ -52,8 +52,12 @@ import CreateReview from "../CreateReview";
     let preview = spot.SpotImages.find((image) => image.preview == true);
     let imageArray = spot.SpotImages.filter((image) => image.preview == false);
     let presentReview;
-    if(sessionUser.id){
-    presentReview = reviewList.find((review) => sessionUser.id ==  review.userId)
+    let userId;
+    if(sessionUser){
+    if(sessionUser.id) {
+        presentReview = reviewList.find((review) => sessionUser.id ==  review.userId)
+        userId = sessionUser.id
+    }
     }
 
 
@@ -133,14 +137,14 @@ return (
                 {spot.numReviews} review
             </h2>)}
         </div>
-        {sessionUser.id && !presentReview && spot.ownerId != sessionUser.id && (
+        {sessionUser && !presentReview && spot.ownerId != sessionUser.id && (
               <OpenModalButton  className='CreateReview'
            buttonText="Create your Review"
             modalComponent={<CreateReview spotId={spotId} refresh={handleModalClose} />}
            />
         )}
 
-             {sessionUser.id && !presentReview && spot.ownerId != sessionUser.id && (
+             {sessionUser && !presentReview && spot.ownerId != userId && (
               <OpenModalButton  className='CreateReview'
            buttonText="Create your Review"
             modalComponent={<CreateReview spotId={spotId} refresh={handleModalClose} />}
@@ -149,9 +153,9 @@ return (
 
 
 
-         {/* {spot.ownerId != sessionUser.id && spot.avgStarRating <= 0 && ( */}
+         {sessionUser && spot.ownerId != userId && spot.avgStarRating <= 0 && (
             <p>Be the first to post a review!</p>
-            {/* // )} */}
+             )}
 
             </div>
 
