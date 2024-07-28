@@ -14,7 +14,7 @@ import CreateReview from "../CreateReview";
     const dispatch = useDispatch();
     const spot = useSelector((state) => state.spots);
     // const reviews = useSelector((state) => state.reviews)
-    const sessionUser = useSelector(state => state.session.user);
+    // const sessionUser = useSelector(state => state.session.user);
     const [reviewList, setReviewList] = useState([]);
 
 
@@ -50,10 +50,10 @@ import CreateReview from "../CreateReview";
 
     let preview = spot.SpotImages.find((image) => image.preview == true);
     let imageArray = spot.SpotImages.filter((image) => image.preview == false);
-    let presentReview;
-    if(sessionUser){
-    presentReview = reviewList.find((review) => sessionUser.id ==  review.userId)
-    }
+    // let presentReview;
+    // if(sessionUser){
+    // presentReview = reviewList.find((review) => sessionUser.id ==  review.userId)
+    // }
 
 
 
@@ -132,22 +132,24 @@ return (
                 {spot.numReviews} review
             </h2>)}
         </div>
-        {sessionUser && !presentReview && spot.Owner.id != sessionUser.id && (
+        {/* {sessionUser && !presentReview && spot.ownerId != sessionUser.id && ( */}
               <OpenModalButton  className='CreateReview'
            buttonText="Create your Review"
             modalComponent={<CreateReview spotId={spotId} refresh={handleModalClose} />}
            />
 
-            )}
-            {sessionUser && !presentReview && spot.Owner.id != sessionUser.id && (
+            {/* // )} */}
+            {/* {sessionUser && !presentReview && spot.ownerId != sessionUser.id && ( */}
               <OpenModalButton  className='CreateReview'
            buttonText="Create your Review"
             modalComponent={<CreateReview spotId={spotId} refresh={handleModalClose} />}
            />
 
-            )}
+            {/* )} */}
 
-         {spot.Owner.id != sessionUser.id && spot.avgStarRating <= 0 && (<p>Be the first to post a review!</p>)}
+         {/* {spot.ownerId != sessionUser.id && spot.avgStarRating <= 0 && ( */}
+            <p>Be the first to post a review!</p>
+            {/* // )} */}
 
             </div>
 
