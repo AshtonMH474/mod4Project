@@ -18,7 +18,7 @@ function ManageSpots() {
     useEffect(() => {
         dispatch(getAllSpots());
 
-      }, [dispatch,newArr]);
+      }, [dispatch]);
 
       if(!spotsArray.length) return <h1>Loading...</h1>
 
