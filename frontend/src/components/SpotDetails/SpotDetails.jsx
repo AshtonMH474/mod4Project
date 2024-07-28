@@ -40,16 +40,19 @@ import CreateReview from "../CreateReview";
       };
 
 
-    //   const formatDate = (dateString) => {
-    //     const date = new Date(dateString);
-    //     return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    //   };
+      const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      };
 
     if(!spot.SpotImages) return <div>Loading...</div>;
 
     let preview = spot.SpotImages.find((image) => image.preview == true);
     let imageArray = spot.SpotImages.filter((image) => image.preview == false);
-    let presentReview = reviewList.find((review) => sessionUser.id ==  review.userId)
+    let presentReview;
+    if(sessionUser){
+    presentReview = reviewList.find((review) => sessionUser.id ==  review.userId)
+    }
 
 
 
@@ -140,7 +143,7 @@ return (
 {spot.Owner.id != sessionUser.id && spot.avgStarRating <= 0 && (<p>Be the first to post a review!</p>)}
 
 
-        {/* <div className="allReviews">
+        <div className="allReviews">
             {reviewList.slice().reverse().map((review) => (
                 <div className="currReview" key={review.id}>
 
@@ -157,7 +160,7 @@ return (
                </div>
             ))}
 
-        </div> */}
+        </div>
 
 
     </div>
