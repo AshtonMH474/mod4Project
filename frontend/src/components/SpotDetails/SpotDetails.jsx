@@ -5,8 +5,8 @@ import { useParams } from "react-router-dom";
 import { detailsOfSpot } from "../../store/spots";
 import './SpotDetails.css'
 import { reviewsForSpot } from "../../store/reviews";
-import OpenModalButton from "../OpenModalButton";
-import CreateReview from "../CreateReview";
+// import OpenModalButton from "../OpenModalButton";
+// import CreateReview from "../CreateReview";
 
  function SpotDetails (){
     const {spotId} = useParams();
@@ -31,13 +31,13 @@ import CreateReview from "../CreateReview";
 
       }, [dispatch,spotId]);
 
-      const handleModalClose = async () => {
-        // Refresh the reviews and spot details
-        await dispatch(detailsOfSpot(spotId));
-        const reviewsData = await dispatch(reviewsForSpot(spotId));
-        setReviewList(Object.values(reviewsData));
-        console.log(reviewList)
-      };
+    //   const handleModalClose = async () => {
+    //     // Refresh the reviews and spot details
+    //     await dispatch(detailsOfSpot(spotId));
+    //     const reviewsData = await dispatch(reviewsForSpot(spotId));
+    //     setReviewList(Object.values(reviewsData));
+    //     console.log(reviewList)
+    //   };
 
 
       const formatDate = (dateString) => {
@@ -49,10 +49,10 @@ import CreateReview from "../CreateReview";
 
     let preview = spot.SpotImages.find((image) => image.preview == true);
     let imageArray = spot.SpotImages.filter((image) => image.preview == false);
-    let presentReview;
-    if(sessionUser){
-    presentReview = reviewList.find((review) => sessionUser.id ==  review.userId)
-    }
+    // let presentReview;
+    // if(sessionUser){
+    // presentReview = reviewList.find((review) => sessionUser.id ==  review.userId)
+    // }
 
 
 
@@ -132,13 +132,13 @@ return (
             </h2>)}
         </div>
 
-        {sessionUser && !presentReview && spot.Owner.id != sessionUser.id && (
+        {/* {sessionUser && !presentReview && spot.Owner.id != sessionUser.id && (
              <OpenModalButton  className='CreateReview'
              buttonText="Create your Review"
              modalComponent={<CreateReview spotId={spotId} refresh={handleModalClose} />}
            />
 
-            )}
+            )} */}
 
 {spot.Owner.id != sessionUser.id && spot.avgStarRating <= 0 && (<p>Be the first to post a review!</p>)}
 
