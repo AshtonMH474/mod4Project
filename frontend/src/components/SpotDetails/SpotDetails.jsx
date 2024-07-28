@@ -1,44 +1,44 @@
 import { useDispatch,useSelector } from "react-redux";
-// import { useEffect, useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+// import { useEffect } from "react";
 import { CiStar } from "react-icons/ci";
 import { useParams } from "react-router-dom";
 import { detailsOfSpot } from "../../store/spots";
 import './SpotDetails.css'
-// import { reviewsForSpot } from "../../store/reviews";
-// import OpenModalButton from "../OpenModalButton";
-// import CreateReview from "../CreateReview";
+import { reviewsForSpot } from "../../store/reviews";
+import OpenModalButton from "../OpenModalButton";
+import CreateReview from "../CreateReview";
 
  function SpotDetails (){
     const {spotId} = useParams();
     const dispatch = useDispatch();
     const spot = useSelector((state) => state.spots);
     // const reviews = useSelector((state) => state.reviews)
-    // const sessionUser = useSelector(state => state.session.user);
-    // const [reviewList, setReviewList] = useState([]);
+    const sessionUser = useSelector(state => state.session.user);
+    const [reviewList, setReviewList] = useState([]);
 
 
 
       useEffect(() => {
         const getData = async () => {
             dispatch(detailsOfSpot(spotId));
-        //    const reviews = await dispatch(reviewsForSpot(spotId))
+           const reviews = await dispatch(reviewsForSpot(spotId))
         //    console.log(reviews)
         //    console.log(spot)
-        //    setReviewList(Object.values(reviews));
+           setReviewList(Object.values(reviews));
         }
 
         getData();
 
       }, [dispatch,spotId]);
 
-    //   const handleModalClose = async () => {
-    //     // Refresh the reviews and spot details
-    //     await dispatch(detailsOfSpot(spotId));
-    //     const reviewsData = await dispatch(reviewsForSpot(spotId));
-    //     setReviewList(Object.values(reviewsData));
-    //     console.log(reviewList)
-    //   };
+      const handleModalClose = async () => {
+        // Refresh the reviews and spot details
+        await dispatch(detailsOfSpot(spotId));
+        const reviewsData = await dispatch(reviewsForSpot(spotId));
+        setReviewList(Object.values(reviewsData));
+        console.log(reviewList)
+      };
 
 
     //   const formatDate = (dateString) => {
@@ -50,10 +50,10 @@ import './SpotDetails.css'
 
     let preview = spot.SpotImages.find((image) => image.preview == true);
     let imageArray = spot.SpotImages.filter((image) => image.preview == false);
-    // let presentReview;
-    // if(sessionUser){
-    // presentReview = reviewList.find((review) => sessionUser.id ==  review.userId)
-    // }
+    let presentReview;
+    if(sessionUser){
+    presentReview = reviewList.find((review) => sessionUser.id ==  review.userId)
+    }
 
 
 
@@ -119,32 +119,46 @@ return (
         </div>
 
     </div>
+
+    <div className="reviewsPerSpot">
+        <div className="reviewTop">
+        {spot.avgStarRating > 0 && ( <h2 id="starReview"> <CiStar className="starTop" />{spot.avgStarRating}</h2>)}
+        {spot.avgStarRating <= 0 && ( <h2 id="starReview"><CiStar className="starTop"/>New</h2>)}
+
+         {spot.numReviews > 1 && (<h2 id='reviewNum'>
+                {spot.numReviews} reviews
+            </h2>)}
+            {spot.numReviews == 1 && (<h2 id='reviewNum'>
+                {spot.numReviews} review
+            </h2>)}
+        </div>
+        {sessionUser && !presentReview && spot.Owner.id != sessionUser.id && (
+              <OpenModalButton  className='CreateReview'
+           buttonText="Create your Review"
+            modalComponent={<CreateReview spotId={spotId} refresh={handleModalClose} />}
+           />
+
+            )}
+            {sessionUser && !presentReview && spot.Owner.id != sessionUser.id && (
+              <OpenModalButton  className='CreateReview'
+           buttonText="Create your Review"
+            modalComponent={<CreateReview spotId={spotId} refresh={handleModalClose} />}
+           />
+
+            )}
+
+         {spot.Owner.id != sessionUser.id && spot.avgStarRating <= 0 && (<p>Be the first to post a review!</p>)}
+
+            </div>
+
     </>
 )
 
 
-//     <div className="reviewsPerSpot">
-//         <div className="reviewTop">
-//         {spot.avgStarRating > 0 && ( <h2 id="starReview"> <CiStar className="starTop" />{spot.avgStarRating}</h2>)}
-//         {spot.avgStarRating <= 0 && ( <h2 id="starReview"><CiStar className="starTop"/>New</h2>)}
 
-//          {spot.numReviews > 1 && (<h2 id='reviewNum'>
-//                 {spot.numReviews} reviews
-//             </h2>)}
-//             {spot.numReviews == 1 && (<h2 id='reviewNum'>
-//                 {spot.numReviews} review
-//             </h2>)}
-//         </div>
 
-        //  {/* {sessionUser && !presentReview && spot.Owner.id != sessionUser.id && ( */}
-//              <OpenModalButton  className='CreateReview'
-//              buttonText="Create your Review"
-//              modalComponent={<CreateReview spotId={spotId} refresh={handleModalClose} />}
-//            />
 
-//             )}
 
-// {spot.Owner.id != sessionUser.id && spot.avgStarRating <= 0 && (<p>Be the first to post a review!</p>)}
 
 
 //         <div className="allReviews">
