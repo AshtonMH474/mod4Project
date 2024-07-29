@@ -15,7 +15,13 @@
     padding-left: 20px;
     padding-bottom: 20px;
     width: 85%;
+    text-decoration: none;
 }
+.linksToSpots{
+   text-decoration: none;
+   color:black
+}
+
 .locationMySpots{
     padding-top: 10px;
     display: flex;

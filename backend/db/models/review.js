@@ -55,5 +55,13 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Review',
   });
+  Review.beforeDestroy(async (review, options) => {
+    await sequelize.models.Image.destroy({
+      where: {
+        imageableType: 'Review',
+        imageableId: review.id,
+      },
+    });
+  });
   return Review;
 };

@@ -28,10 +28,11 @@ function Home() {
               <div key={spot.id} className="column">
                 {spot.previewImage && (
                   <>
+                  <NavLink className='linksToSpots' to={`/spots/${spot.id}`}>
                     <div className="spotName">
-                      <NavLink to={`/spots/${spot.id}`}>
+
                       <Tooltip spot={spot}/>
-                      </NavLink>
+
                 </div>
 
 
@@ -47,7 +48,9 @@ function Home() {
                     ${spot.price}
                     </p>
                     <p>night</p>
+
                     </div>
+                    </NavLink>
                 </>
               )}
             </div>

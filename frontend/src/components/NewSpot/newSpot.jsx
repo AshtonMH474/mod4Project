@@ -1,10 +1,12 @@
 import { useDispatch } from 'react-redux';
 import './newSpot.css';
-import { useState } from 'react';
-import { createSpot } from '../../store/spots';
+import { useEffect, useState } from 'react';
+import { createSpot, detailsOfSpot, updateSpot } from '../../store/spots';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+
 function SpotForm(){
+    const {spotId} = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [country, setCountry] = useState('')
@@ -24,9 +26,61 @@ function SpotForm(){
     const [errors, setErrors] = useState({});
 
 
-    const sessionUser = useSelector(state => state.session.user);
+    const spot = useSelector((state) => state.spots);
+    let id = spot.id
 
 
+
+
+
+
+    useEffect(() => {
+        if(spotId) dispatch(detailsOfSpot(spotId));
+        const spotInfo = async() => {
+            setCountry(spot.country);
+            setAddress(spot.address);
+            setCity(spot.city);
+            setState(spot.state);
+            setLat(spot.lat);
+            setLog(spot.lng);
+            setDescription(spot.description);
+            setName(spot.name);
+            setMoney(spot.price);
+
+            let preview = spot.SpotImages.find((image) => image.preview = true)
+            setPreview(preview.url);
+            console.log(preview)
+
+            let images = spot.SpotImages.filter((image) => image.url != preview.url)
+            if(images[0]) setImage1(images[0].url)
+            if(images[1]) setImage2(images[1].url);
+            if(images[2]) setImage3(images[2].url);
+            if(images[3]) setImage4(images[3].url);
+
+        }
+
+        const deleteInfo = async() => {
+            setCountry('');
+            setAddress('');
+            setCity('');
+            setState('');
+            setLat('');
+            setLog('');
+            setDescription('');
+            setName('');
+            setMoney('');
+            setPreview('');
+            setImage1('');
+            setImage2('');
+            setImage3('');
+            setImage4('');
+        }
+        if(spot && id){
+            spotInfo();
+        }else{
+            deleteInfo();
+        }
+    },[dispatch,spotId,id])
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -55,7 +109,6 @@ function SpotForm(){
         }
 
         let spot = {
-            ownerId:sessionUser.id,
             address:address,
             city:city,
             state:state,
@@ -67,14 +120,19 @@ function SpotForm(){
             price:money
         };
         try{
-        const result = await dispatch(createSpot(images,spot))
-        console.log(result)
-        navigate(`/spots/${result.id}`);
+        if(spot && id){
+            const result = await dispatch(updateSpot(spot,id))
+            navigate(`/spots/${result.id}`);
+        }else{
+            const result = await dispatch(createSpot(images,spot))
+
+            navigate(`/spots/${result.id}`);
+        }
         }catch(res) {
-            console.log(res)
+
             if(res){
              let data = await res.json();
-            console.log(data)
+
             if(data && data.message){
                 if(!previewImage.length){
                     data.errors.preview = 'Preview image is required'
@@ -98,9 +156,11 @@ function SpotForm(){
     return (
         <>
         <form onSubmit={handleSubmit} className='newSpotForm'>
-        <h1>Create a New Spot</h1>
+       {spot && !id && (<h1>Create a New Spot</h1>)}
+       {spot && id && (<h1>Update your Spot</h1>)}
     <div id='borderNew'>
         <h2>Where&apos;s your place located?</h2>
+
         <div className='aboveL'>Guests will only get your exact address once they booked a
         reservation.</div>
 
@@ -233,8 +293,8 @@ function SpotForm(){
 
         </div>
 
-        <button className='createSpot' type="submit">Create Spot</button>
-
+        {spot && !id && (<button className='createSpot' type="submit">Create Spot</button>)}
+       {spot && id && (<button className='createSpot' type="submit">Update Spot</button>)}
         </form>
         </>
     );

@@ -38,7 +38,7 @@ import CreateReview from "../CreateReview";
         await dispatch(detailsOfSpot(spotId));
         const reviewsData = await dispatch(reviewsForSpot(spotId));
         setReviewList(Object.values(reviewsData));
-        console.log(reviewList)
+
       };
 
 

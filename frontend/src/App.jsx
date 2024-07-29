@@ -10,6 +10,7 @@ import ManageSpots from './components/ManageSpots';
 
 
 
+
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);

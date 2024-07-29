@@ -13,6 +13,7 @@ function OpenModalButton({
     setModalContent(modalComponent);
     if (typeof onButtonClick === "function") onButtonClick();
   };
+  if(buttonText == 'Delete')return <button   className="deleteModal" onClick={onClick}>{buttonText}</button>;
   if(buttonText == 'Create your Review')return <button   className="CreateReview" onClick={onClick}>{buttonText}</button>;
   return <button   className="buttonProfile" onClick={onClick}>{buttonText}</button>;
 }
