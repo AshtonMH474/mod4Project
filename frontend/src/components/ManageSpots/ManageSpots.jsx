@@ -2,8 +2,10 @@ import { useDispatch,useSelector } from "react-redux";
 import { CiStar } from "react-icons/ci";
 import { useEffect } from "react";
 import { getAllSpots } from "../../store/spots";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import './ManageSpots.css';
+import OpenModalButton from "../OpenModalButton";
+import DeleteSpot from "../DeleteSpot";
 
 function ManageSpots() {
     const navigate = useNavigate();
@@ -33,8 +35,11 @@ function ManageSpots() {
             <div className="mySpots">
             {newArr.map((spot) => (
             <>
-            <div id="currSpot">
+
+            <div id="currSpot" key={spot.id}>
+            <NavLink className='linksToSpots' to={`/spots/${spot.id}`}>
                     <img  className="preview" src={spot.previewImage} alt={spot.id}/>
+
                     <div className="locationMySpots">
                         <div>{spot.city}, {spot.state}</div>
                         <div><CiStar className="starMySpot"/>{spot.avgRating}</div>
@@ -43,10 +48,14 @@ function ManageSpots() {
                     <div id='priceMySpots'>${spot.price}</div>
                     <div className="night">night</div>
                 </div>
+                </NavLink>
                 <div className="buttonsMySpots">
                     <div><button onClick={() => navigate(`/spots/${spot.id}/edit`)}>Update</button></div>
-                    <div><button>Delete</button></div>
+                    <div>   <OpenModalButton  className='deleteModal'
+                    buttonText="Delete"
+                    modalComponent={<DeleteSpot spot={spot}/>}/></div>
                 </div>
+
              </div>
 
             </>

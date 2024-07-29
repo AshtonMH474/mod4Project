@@ -95,5 +95,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   );
+  User.beforeDestroy(async (user, options) => {
+    await sequelize.models.Image.destroy({
+      where: {
+        imageableType: 'User',
+        imageableId: user.id,
+      },
+    });
+  });
   return User;
 };

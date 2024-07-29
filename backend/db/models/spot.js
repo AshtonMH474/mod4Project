@@ -147,6 +147,14 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Spot',
   });
+  Spot.beforeDestroy(async (spot, options) => {
+    await sequelize.models.Image.destroy({
+      where: {
+        imageableType: 'Spot',
+        imageableId: spot.id,
+      },
+    });
+  });
   return Spot;
 };
 
