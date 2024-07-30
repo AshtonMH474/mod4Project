@@ -20,7 +20,7 @@ function ManageSpots() {
     useEffect(() => {
         dispatch(getAllSpots());
 
-      }, [dispatch]);
+      }, [dispatch,spotsArray.length]);
 
       if(!spotsArray.length) return <h1>Loading...</h1>
 
@@ -42,7 +42,8 @@ function ManageSpots() {
 
                     <div className="locationMySpots">
                         <div>{spot.city}, {spot.state}</div>
-                        <div><CiStar className="starMySpot"/>{spot.avgRating}</div>
+                       {spot.avgRating > 0 && (<div><CiStar className="starMySpot"/>{spot.avgRating}</div>)}
+                       {spot.avgRating <= 0 && (<div><CiStar className="starMySpot"/>New</div>)}
                         </div>
                 <div className="pricesForMySpots">
                     <div id='priceMySpots'>${spot.price}</div>
