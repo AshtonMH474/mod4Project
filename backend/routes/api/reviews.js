@@ -200,11 +200,76 @@ router.delete('/:reviewId', async(req,res) => {
     })
     if(!foundReview)return res.status(404).json({message: "Review couldn't be found"});
     if(foundReview && foundReview.userId == userId){
+
+        let spot = await Spot.findOne({where:{id:foundReview.spotId}});
+
+
+
+
         await foundReview.destroy();
+
+        let reviewsForSpot = await Review.findAll({where:{spotId:spot.id}});
+
+        let numReviewsSpot;
+        if(!reviewsForSpot.length){
+            numReviewsSpot = 0;
+        }else numReviewsSpot = await countReviews(reviewsForSpot);
+        let average;
+        if(!reviewsForSpot.length) average = 0;
+        else {
+        average = await averageRating(reviewsForSpot);
+        average = round(average,1);
+        }
+
+        // console.log(average)
+        await spot.update({
+            numReviews: numReviewsSpot,
+            avgRating:average
+          });
+
         res.json({
             message: "Successfully deleted"
           });
+
+
+
     }else res.status(403).json({message: "Forbidden"});
 }return res.status(401).json({message:"Authentication required"})
 })
+
+
+
+async function countReviews(arr){
+    let count = 0;
+
+    for(let spot of arr){
+      count++
+    }
+
+    return count;
+  }
+
+
+  async function averageRating(reviews, arr = []){
+    let spot = await Spot.findOne({where:{id:reviews[0].spotId}});
+    if(spot.avgRating != 0) arr.push(spot.avgRating);
+
+    let count = 0;
+    for(let spot of reviews){
+      arr.push(spot.stars);
+    }
+
+    for(let curr of arr){
+      count += curr;
+    }
+
+    return count/arr.length
+
+  }
+  function round(value, decimalPlace) {
+    let multiplier = Math.pow(10, decimalPlace || 0);
+    return Math.round(value * multiplier) / multiplier;
+}
+
+
 module.exports = router;

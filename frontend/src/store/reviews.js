@@ -54,8 +54,10 @@ export const deleteReview = (reviewId) => async(dispatch) => {
         method:'DELETE'
     });
 
+    const data = res.json();
+        console.log(data);
     if(res.ok){
-        const data = res.json();
+
         dispatch(removedReview(reviewId));
         return data
     }
