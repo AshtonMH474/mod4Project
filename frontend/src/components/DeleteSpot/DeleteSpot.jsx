@@ -13,8 +13,9 @@ function DeleteSpot({spot}){
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatch(deleteSpot(spot));
+        await dispatch(getAllSpots());
         closeModal();
-        dispatch(getAllSpots());
+
     }
 
     return (

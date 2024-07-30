@@ -66,6 +66,9 @@ export const getAllSpots = () => async (dispatch) => {
 
 }
 
+// export const userSpots = () => async (dispatch) => {
+//     const res = await fetch
+// }
 
 export const detailsOfSpot = (id) => async (dispatch) => {
     const res = await fetch(`/api/spots/${id}`);

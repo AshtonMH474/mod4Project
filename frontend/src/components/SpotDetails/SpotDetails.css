@@ -225,12 +225,15 @@ padding-top: 7px;
 .CreateReview:hover{
     background-color: #484848;
 }
-.deleteReview{
-    background-color: #484848;
-    color: white;
-}
+
 .allReviews{
     position: relative;
     width:60%;
     left:20%;
+}
+
+.deleteModal{
+    background-color: #484848;
+    color: white;
+    cursor: pointer;
 }

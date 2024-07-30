@@ -8,6 +8,7 @@ import './SpotDetails.css'
 import { reviewsForSpot } from "../../store/reviews";
 import OpenModalButton from "../OpenModalButton";
 import CreateReview from "../CreateReview";
+import DeleteReview from "../DeleteReview";
 
  function SpotDetails (){
     const {spotId} = useParams();
@@ -34,7 +35,6 @@ import CreateReview from "../CreateReview";
       }, [dispatch,spotId]);
 
       const handleModalClose = async () => {
-        // Refresh the reviews and spot details
         await dispatch(detailsOfSpot(spotId));
         const reviewsData = await dispatch(reviewsForSpot(spotId));
         setReviewList(Object.values(reviewsData));
@@ -163,7 +163,7 @@ return (
                     <h3 className="nameReview">{review.User.firstName}</h3>
                 <h3 className="dateReview">{formatDate(review.createdAt)}</h3>
                 <p className="reviewContent">{review.review}</p>
-                {sessionUser && review.User.id == userId && (<button className="deleteReview">Delete</button>)}
+                {sessionUser && review.User.id == userId && (<OpenModalButton buttonText='Delete' className="deleteReview" modalComponent={<DeleteReview reviewId={review.id} refresh={handleModalClose} />}/>)}
                 </>
                 ):(
                     <p>Loading...</p>
