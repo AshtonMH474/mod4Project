@@ -61,6 +61,9 @@ module.exports = (sequelize, DataTypes) => {
         if(count >= 1 && this.preview == true)throw new Error('only one image can be a preview');
       }
      }
+    },
+    publicId:{
+      type:DataTypes.STRING
     }
   }, {
     sequelize,

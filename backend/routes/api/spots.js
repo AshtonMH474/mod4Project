@@ -5,9 +5,15 @@ const jwt = require('jsonwebtoken');
 const {Spot,Image,User,Review,Booking} = require('../../db/models');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const booking = require('../../db/models/booking');
+const multer = require('multer');
+const cloudinary = require('../../config/cloudinary');
+
 
 
 const router = express.Router();
+
+
+const upload = multer({ dest: 'uploads/' });
 
 router.post('/', async(req,res,next) => {
     const {token} = req.cookies;
@@ -201,7 +207,7 @@ router.get('/:spotId', async(req,res,next) => {
 
 
 
-router.post('/:spotId/images', async(req,res,next) => {
+router.post('/:spotId/images',upload.single('file'), async(req,res,next) => {
     const {token} = req.cookies;
 
     if(token){
@@ -213,23 +219,49 @@ router.post('/:spotId/images', async(req,res,next) => {
     if(!spot) return res.status(404).json({message:"Spot couldn't be found"});
 
     if(spot.ownerId == decodedPayload.data.id){
-        const {url, preview} = req.body;
+        const {preview} = req.body;
 
 
 
-           await Image.create({
-            imageableType:'Spot',
-            imageableId: spotId,
-            url:url,
-            preview:preview
-           },{validate:true});
+        //    await Image.create({
+        //     imageableType:'Spot',
+        //     imageableId: spotId,
+        //     url:url,
+        //     preview:preview
+        //    },{validate:true});
 
-           let newImage = await Image.findOne({
-            where:{url:url},
-            attributes:{exclude:['imageableId','imageableType','createdAt','updatedAt']}
-           });
+        //    let newImage = await Image.findOne({
+        //     where:{url:url},
+        //     attributes:{exclude:['imageableId','imageableType','createdAt','updatedAt']}
+        //    });
 
-          return res.status(201).json(newImage);
+        //   return res.status(201).json(newImage);
+        try {
+            const result = await cloudinary.uploader.upload(req.file.path, {
+              upload_preset: 'FormatImages', // Use your preset
+            });
+
+            // Extract metadata
+            const imageMetadata = {
+              publicId: result.public_id,
+              url: result.secure_url,
+            };
+
+            // Store image metadata in your database
+            // Example: await saveImageMetadataToDatabase(spotId, imageMetadata);
+            await Image.create({
+                imageableType:'Spot',
+                    imageableId: spotId,
+                    url:imageMetadata.url,
+                    preview:preview,
+                    publicId:imageMetadata.publicId
+                   },{validate:true});
+
+            res.json(imageMetadata); // Return image metadata
+          } catch (error) {
+            console.error('Upload error:', error);
+            res.status(500).json({ error: 'Error uploading image' });
+          }
 
     }else return res.status(403).json({message: "Forbidden"});
 }
@@ -400,6 +432,10 @@ router.post('/:spotId/reviews', async(req,res) => {
         let numReviewsSpot = await countReviews(reviewsForSpot);
         let average = await averageRating(reviewsForSpot);
         average = round(average,1);
+
+
+
+
 
         await spot.update({
             numReviews: numReviewsSpot,
@@ -632,4 +668,5 @@ async function countReviews(arr){
   function round(value, decimalPlace) {
     let multiplier = Math.pow(10, decimalPlace || 0);
     return Math.round(value * multiplier) / multiplier;
+
 }

@@ -110,6 +110,8 @@ padding-bottom: 10px;
 
 .spotD{
     width: 400px;
+    overflow-wrap: break-word;
+    /* border: 1px black solid; */
 }
 
 .spotRating{

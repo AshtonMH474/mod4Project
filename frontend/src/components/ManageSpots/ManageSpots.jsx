@@ -42,7 +42,7 @@ function ManageSpots() {
 
                     <div className="locationMySpots">
                         <div>{spot.city}, {spot.state}</div>
-                       {spot.avgRating > 0 && (<div><CiStar className="starMySpot"/>{spot.avgRating}</div>)}
+                       {spot.avgRating > 0 && (<div><CiStar className="starMySpot"/>{spot.avgRating.toFixed(1)}</div>)}
                        {spot.avgRating <= 0 && (<div><CiStar className="starMySpot"/>New</div>)}
                         </div>
                 <div className="pricesForMySpots">

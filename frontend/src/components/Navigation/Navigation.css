@@ -1,6 +1,13 @@
 *{
     font-family: sans-serif;
 }
+body{
+    padding-top: 150px;
+}
+.navTop{
+    border: 1px solid black;
+}
+
 .buttonProfile{
     position: relative;
     box-sizing: border-box;
@@ -41,7 +48,7 @@ div .boxProfile{
 .logo{
     position: absolute;
     color:#FF5A5F;
-    top: 20px;
+    top: 10px;
     height: 100px;
     width: 100px;
     transform: rotate(180deg);
@@ -59,12 +66,17 @@ div .boxProfile{
 }
 
 .top{
+    width: 95%;
+    position: absolute;
+    bottom: 830px;
+    /* z-index: 1000; */
     height: 60px;
     border-bottom: solid black 1px;
     list-style-type: none;
-    display: flex; /* Displays list items in a row */
+    display: flex;
     justify-content: space-between;
     padding: 25px;
+
 }
 .newSpot{
 position: relative;
@@ -85,14 +97,19 @@ top: 35px;
     position: relative;
     top:3px
 }
-
+.allProfile{
+    position: absolute;
+    right: 1%;
+}
 .profile{
     position: relative;
+
     height: 50px;
     width: 200px;
     cursor: pointer;
     display: flex;
     justify-content: center;
+
 
 }
 

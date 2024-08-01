@@ -32,7 +32,7 @@ function Navigation({ isLoaded }) {
 
       </li>
       {isLoaded && (
-
+        <div className='allProfile'>
         <li className={sessionUser ? 'relativePosition' : 'groupLinks'}>
             <div className='newSpot'>
             {sessionUser && (<NavLink onClick={refresh} className='newSpotLink' to='/spots/new'>Create a New Spot</NavLink>)}
@@ -41,6 +41,7 @@ function Navigation({ isLoaded }) {
           <ProfileButton user={sessionUser}  />
           </div>
         </li>
+        </div>
       )}
     </ul>
 
