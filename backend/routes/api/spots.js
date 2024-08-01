@@ -241,23 +241,19 @@ router.post('/:spotId/images',upload.single('file'), async(req,res,next) => {
               upload_preset: 'FormatImages', // Use your preset
             });
 
-            // Extract metadata
-            const imageMetadata = {
-              publicId: result.public_id,
-              url: result.secure_url,
-            };
 
-            // Store image metadata in your database
-            // Example: await saveImageMetadataToDatabase(spotId, imageMetadata);
-            await Image.create({
+
+
+
+            let newImage = await Image.create({
                 imageableType:'Spot',
                     imageableId: spotId,
-                    url:imageMetadata.url,
+                    url:result.secure_url,
                     preview:preview,
-                    publicId:imageMetadata.publicId
+
                    },{validate:true});
 
-            res.json(imageMetadata); // Return image metadata
+            res.json(newImage);
           } catch (error) {
             console.error('Upload error:', error);
             res.status(500).json({ error: 'Error uploading image' });
