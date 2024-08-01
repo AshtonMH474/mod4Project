@@ -106,23 +106,45 @@ export const updateSpot = (payload,id) => async(dispatch) => {
 }
 
 export const createSpot = (images,payload) => async (dispatch) => {
+
+
+
+
     const res = await csrfFetch('/api/spots',{
         method:'POST',
         body:JSON.stringify(payload)
     });
 
 
-
+    // console.log(await res.json())
     if(res.ok){
         const spot = await res.json();
-        for(let i = 0; i < images.length; i++){
-            let image = images[i];
 
+        for(let i = 0; i < images.length; i++){
+            let imageFile = images[i];
+            const formData = new FormData();
+
+
+            formData.append('file', imageFile);
+            if(i == 0) formData.append('preview','true');
+
+            try{
            await csrfFetch(`/api/spots/${spot.id}/images`,{
                 method:'POST',
-                body:JSON.stringify(image)
+                headers:{
+                    'Content-Type':'multipart/form-data'
+                },
+                body:formData
             })
+        }catch(e){
+            await csrfFetch(`/api/spots/${spot.id}`,{
+                method:'DELETE'
+            })
+            let error = new Error("Image URL's must end in .png, .jpg, or .jpeg");
+            return error;
 
+
+        }
 
         }
 

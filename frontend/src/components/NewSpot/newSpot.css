@@ -139,3 +139,21 @@ padding-bottom: 10px;
     color: red;
     font-size: 12px;
 }
+#ImageErrors{
+display: block;
+}
+#ImageErrors label{
+padding: 5px;
+color:red;
+}
+.imagesCreateSpot div{
+    padding: 10px 0px;
+}
+.imagesCreateSpot input{
+    width: 100%;
+    cursor: pointer;
+    border: 1px solid lightgray;
+}
+.imagesCreateSpot{
+    padding-bottom: 10px;
+}

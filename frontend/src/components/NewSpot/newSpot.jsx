@@ -18,17 +18,31 @@ function SpotForm(){
     const [description,setDescription] = useState('')
     const [name,setName] = useState('')
     const [money,setMoney] = useState('')
-    const [previewImage, setPreview] = useState('');
-    const [image1, setImage1] = useState('');
-    const [image2, setImage2] = useState('');
-    const [image3, setImage3] = useState('');
-    const [image4, setImage4] = useState('');
+    // const [previewImage, setPreview] = useState('');
+    // const [image1, setImage1] = useState('');
+    // const [image2, setImage2] = useState('');
+    // const [image3, setImage3] = useState('');
+    // const [image4, setImage4] = useState('');
     const [errors, setErrors] = useState({});
 
 
-    const spot = useSelector((state) => state.spots);
+    const spot= useSelector((state) => state.spots);
     let id = spot.id
 
+    const [previewImage, setPreview] = useState(null);
+     const [image1, setImage1] = useState(null);
+    const [image2, setImage2] = useState(null);
+    const [image3, setImage3] = useState(null);
+    const [image4, setImage4] = useState(null);
+
+    const [files,setFiles] = useState([]);
+    const previewChange = (e) => {
+        setPreview(e.target.files[0]);
+        console.log(image1);
+        console.log(image2);
+        console.log(image3);
+        console.log(image4);
+      };
 
 
 
@@ -69,11 +83,11 @@ function SpotForm(){
             setDescription('');
             setName('');
             setMoney('');
-            setPreview('');
-            setImage1('');
-            setImage2('');
-            setImage3('');
-            setImage4('');
+            setPreview(null);
+            setImage1(null);
+            setImage2(null);
+            setImage3(null);
+            setImage4(null);
         }
         if(spot && id){
             spotInfo();
@@ -85,30 +99,30 @@ function SpotForm(){
         e.preventDefault();
 
         setErrors({});
+        //pushing files into one array
         let images = [];
-        if(previewImage.length)images.push({preview:true, url:previewImage})
-        if(image1.length)images.push({preview:false, url:image1})
-        if(image2.length)images.push({preview:false, url:image2})
-        if(image3.length)images.push({preview:false, url:image3})
-        if(image4.length)images.push({preview:false, url:image4})
+        if(previewImage && previewImage.name)images.push(previewImage)
+        files.forEach((file) => images.push(file))
 
 
-
-
+        //image errors
         let obj = {};
-        if(!previewImage.length && country.length)obj.preview ='Preview image is required'
-        if(previewImage.length && !previewImage.endsWith('.png') && !previewImage.endsWith('.jpg' ) && !previewImage.endsWith('.jpeg')) obj.preview = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(image1.length && !image1.endsWith('.png') && !image1.endsWith('.jpg' ) && !image1.endsWith('.jpeg')) obj.image1 = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(image2.length && !image2.endsWith('.png') && !image2.endsWith('.jpg' ) && !image2.endsWith('.jpeg')) obj.image2 = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(image3.length &&!image3.endsWith('.png') && !image3.endsWith('.jpg' ) && !image3.endsWith('.jpeg')) obj.image3 = 'Image URL must end in .png, .jpg, or .jpeg'
-        if(image4.length &&!image4.endsWith('.png') && !image4.endsWith('.jpg' ) && !image4.endsWith('.jpeg')) obj.image4 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if(country && !previewImage) obj.preview = 'Preview image is required'
+        if(images.length > 5) obj.images = 'Only 1-5 Images can be submitted';
+        images.forEach((image) => {
+            if(!image.name.endsWith('jpeg') && !image.name.endsWith('jpg') && !image.name.endsWith('png')){
+                obj.imagesFormat = "Image URL's must end in .png, .jpg, or .jpeg"
+            }
+        })
 
         if(Object.keys(obj).length){
             setErrors(obj);
-            return new Error();
+            return;
         }
 
-        let spot = {
+
+        //creating spot
+        let newSpot = {
             address:address,
             city:city,
             state:state,
@@ -120,35 +134,39 @@ function SpotForm(){
             price:money
         };
         try{
+
+        //updating
         if(spot && id){
-            const result = await dispatch(updateSpot(spot,id))
+            const result = await dispatch(updateSpot(newSpot,id))
             navigate(`/spots/${result.id}`);
         }else{
-            const result = await dispatch(createSpot(images,spot))
-
+            //creating
+            const result = await dispatch(createSpot(images,newSpot))
+            if(result.message){
+                let obj = {};
+                obj.imagesFormat = "Image URL's must end in .png, .jpg, or .jpeg";
+                setErrors(obj);
+                return;
+            }
             navigate(`/spots/${result.id}`);
         }
         }catch(res) {
-
+            //if input boxes arent filled
             if(res){
              let data = await res.json();
+                if(data && data.message){
 
-            if(data && data.message){
-                if(!previewImage.length){
-                    data.errors.preview = 'Preview image is required'
-
-                }
-                if(previewImage.length && !previewImage.endsWith('.png') && !previewImage.endsWith('.jpg' ) && !previewImage.endsWith('.jpeg')) data.errors.preview = 'Image URL must end in .png, .jpg, or .jpeg'
-                if(image1.length && !image1.endsWith('.png') && !image1.endsWith('.jpg' ) && !image1.endsWith('.jpeg')) data.errors.image1 = 'Image URL must end in .png, .jpg, or .jpeg'
-                if(image2.length && !image2.endsWith('.png') && !image2.endsWith('.jpg' ) && !image2.endsWith('.jpeg')) data.errors.image2 = 'Image URL must end in .png, .jpg, or .jpeg'
-                if(image3.length &&!image3.endsWith('.png') && !image3.endsWith('.jpg' ) && !image3.endsWith('.jpeg')) data.errors.image3 = 'Image URL must end in .png, .jpg, or .jpeg'
-                if(image4.length &&!image4.endsWith('.png') && !image4.endsWith('.jpg' ) && !image4.endsWith('.jpeg')) data.errors.image4 = 'Image URL must end in .png, .jpg, or .jpeg'
+                    if(!previewImage){
+                        data.errors.preview = 'Preview image is required'
+                    }
 
                  setErrors(data.errors);
                 return new Error();
 
-            }
-        }
+                }
+             }
+
+
         }
 
     }
@@ -264,33 +282,18 @@ function SpotForm(){
 
         <div id='borderNew'>
             <h2>Liven up your spot with photos</h2>
-            <div className='aboveL'>Submit a link to at least one photo to publish your spot.</div>
-            <input type='text' value={previewImage} placeholder='Preview Image URL'
-            onChange={(e) => setPreview(e.target.value)}
-            />
-            {errors.preview && (<label id='createErrorsDown'>{errors.preview}</label>)}
+            <div className='aboveL'>Submit a link to at least one photo to publish your spot. If only one Image, it must be submitted to first box</div>
 
 
-            <input type='text' value={image1} placeholder='Image URL'
-            onChange={(e) => setImage1(e.target.value)}
-            />
-             {errors.image1 && (<label id='createErrorsDown'>{errors.image1}</label>)}
-
-            <input type='text' value={image2} placeholder='Image URL'
-            onChange={(e) => setImage2(e.target.value)}
-            />
-            {errors.image2 && (<label id='createErrorsDown'>{errors.image2}</label>)}
-
-            <input type='text' value={image3} placeholder='Image URL'
-            onChange={(e) => setImage3(e.target.value)}
-            />
-            {errors.image3 && (<label id='createErrorsDown'>{errors.image3}</label>)}
-
-            <input type='text' value={image4} placeholder='Image URL'
-            onChange={(e) => setImage4(e.target.value)}
-            />
-            {errors.image4 && (<label id='createErrorsDown'>{errors.image4}</label>)}
-
+            <div id='ImageErrors'>
+             {errors.preview && (<label >{errors.preview}</label>)}
+             {errors.images && (<label id='ImageErrors'>{errors.images}</label>)}
+             {errors.imagesFormat && (<label id='ImageErrors'>{errors.imagesFormat}</label>)}
+             </div>
+             <div className='imagesCreateSpot'>
+             <div><input type="file"   onChange={previewChange} /></div>
+             <div><input type='file'  onChange={(e) => setFiles(Array.from(e.target.files))} multiple/></div>
+             </div>
         </div>
 
         {spot && !id && (<button className='createSpot' type="submit">Create Spot</button>)}
