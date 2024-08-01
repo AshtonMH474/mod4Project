@@ -2,10 +2,7 @@
     font-family: sans-serif;
 }
 body{
-    padding-top: 150px;
-}
-.navTop{
-    border: 1px solid black;
+    /* padding-top: 150px; */
 }
 
 .buttonProfile{
@@ -48,7 +45,7 @@ div .boxProfile{
 .logo{
     position: absolute;
     color:#FF5A5F;
-    top: 10px;
+    top: 5px;
     height: 100px;
     width: 100px;
     transform: rotate(180deg);
@@ -65,12 +62,15 @@ div .boxProfile{
     top: 20px;
 }
 
+
+
 .top{
-    width: 95%;
-    position: absolute;
-    bottom: 830px;
-    /* z-index: 1000; */
+    width: 100%;
+    position: relative;
+    left:0;
+    top:0px;
     height: 60px;
+    /* border: 1px black solid; */
     border-bottom: solid black 1px;
     list-style-type: none;
     display: flex;
@@ -92,17 +92,16 @@ top: 35px;
 .relativePosition{
     position: relative;
     bottom: 15px;
+    right: 25px;
 }
 .groupLinks{
     position: relative;
-    top:3px
+    top:3px;
+    right:25px
 }
-.allProfile{
-    position: absolute;
-    right: 1%;
-}
+
 .profile{
-    position: relative;
+    /* position: relative; */
 
     height: 50px;
     width: 200px;

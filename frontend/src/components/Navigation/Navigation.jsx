@@ -17,35 +17,33 @@ function Navigation({ isLoaded }) {
   };
 
   return (
-    <div >
-    <ul className='top'>
-      <li >
+    <div className='containerNav'>
+        <div className='top'>
+      <div >
 
         <div>
         <NavLink to="/"><FontAwesomeIcon className='logo' icon={faAirbnb}  /></NavLink>
         <NavLink className='logoName' to="/">airbnb</NavLink>
         </div>
 
-      </li>
+      </div>
 
-      <li>
 
-      </li>
       {isLoaded && (
         <div className='allProfile'>
-        <li className={sessionUser ? 'relativePosition' : 'groupLinks'}>
+        <div className={sessionUser ? 'relativePosition' : 'groupLinks'}>
             <div className='newSpot'>
             {sessionUser && (<NavLink onClick={refresh} className='newSpotLink' to='/spots/new'>Create a New Spot</NavLink>)}
             </div>
             <div>
           <ProfileButton user={sessionUser}  />
           </div>
-        </li>
+        </div>
         </div>
       )}
-    </ul>
+        </div>
 
-    </div>
+        </div>
   );
 }
 
