@@ -62,9 +62,9 @@ module.exports = (sequelize, DataTypes) => {
       }
      }
     },
-    publicId:{
-      type:DataTypes.STRING
-    }
+    // publicId:{
+    //   type:DataTypes.STRING
+    // }
   }, {
     sequelize,
     modelName: 'Image',
