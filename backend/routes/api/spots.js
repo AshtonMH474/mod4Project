@@ -634,7 +634,7 @@ async function previewImage(spots, arr =[]){
 
 
 
-async function countReviews(arr){
+ async function countReviews(arr){
     let count = 0;
 
     for(let spot of arr){
@@ -645,7 +645,7 @@ async function countReviews(arr){
   }
 
 
-  async function averageRating(reviews, arr = []){
+   async function averageRating(reviews, arr = []){
     let spot = await Spot.findOne({where:{id:reviews[0].spotId}});
     if(spot.avgRating != 0) arr.push(spot.avgRating);
 
@@ -661,8 +661,11 @@ async function countReviews(arr){
     return count/arr.length
 
   }
-  function round(value, decimalPlace) {
+   const round = (value, decimalPlace)=> {
     let multiplier = Math.pow(10, decimalPlace || 0);
     return Math.round(value * multiplier) / multiplier;
 
 }
+module.exports.averageRating = averageRating;
+module.exports.countReviews = countReviews
+module.exports.round = round

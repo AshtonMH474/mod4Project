@@ -76,6 +76,7 @@ div .boxProfile{
     display: flex;
     justify-content: space-between;
     padding: 25px;
+    z-index: 1000;
 
 }
 .newSpot{

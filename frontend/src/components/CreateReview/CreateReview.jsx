@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import StarRating from './StarRating';
 import { useModal } from '../../Context/Modal';
 
-import { addReview } from '../../store/reviews';
+import { addReview, updateReview } from '../../store/reviews';
 import { useDispatch } from 'react-redux';
 
-function CreateReview({spotId,refresh}){
+function CreateReview({spot,spotId,refresh,currReview}){
     const dispatch = useDispatch();
     const [review, setReview] = useState('')
     const [rating, setRating] = useState(0);
@@ -24,7 +24,13 @@ function CreateReview({spotId,refresh}){
         const payload = { review, stars: rating };
 
         try {
-          await dispatch(addReview(spotId, payload));
+            if(currReview){
+                await dispatch(updateReview(currReview,payload));
+            }
+            if(!currReview){
+                await dispatch(addReview(spotId, payload));
+            }
+
           closeModal();
           refresh();
         } catch (res) {
@@ -41,12 +47,13 @@ function CreateReview({spotId,refresh}){
        if(review.length < 10 || rating < 1) setDisable(true)
         if(review.length >= 10 && rating > 0 ) setDisable(false)
 
-
     },[setDisable,rating,review])
     return (
           <>
       <div className='createReviewContainer'>
-      <h1 className='stay'>How was your stay?</h1>
+      {!currReview && (<h1 className='stay'>How was your stay?</h1>)}
+      {currReview && spot && (<h1 className='stay'>How was your stay at {spot.name}?</h1>)}
+
       {errors.review && (
           <div className='reviewError'>{errors.review}</div>
         )}
@@ -63,9 +70,11 @@ function CreateReview({spotId,refresh}){
     <div className='starReview'>
     <StarRating rating={rating} onRatingChange={handleRatingChange}/>
     </div>
-    {disabled == true &&  (<button style={{backgroundColor:'#484848',cursor:'default'}} disabled={disabled} className='reviewSubmit'  type="submit">Submit Your Review</button>)}
-    {disabled == false && (<button style={{}} disabled={disabled} className='reviewSubmit'  type="submit">Submit Your Review</button>)}
+    {disabled == true &&  !currReview &&  (<button style={{backgroundColor:'#484848',cursor:'default'}} disabled={disabled} className='reviewSubmit'  type="submit">Submit Your Review</button>)}
+    {disabled == false && !currReview && (<button style={{}} disabled={disabled} className='reviewSubmit'  type="submit">Submit Your Review</button>)}
 
+    {disabled == true && currReview &&  (<button style={{backgroundColor:'#484848',cursor:'default'}} disabled={disabled} className='reviewSubmit'  type="submit">Update Your Review</button>)}
+    {disabled == false && currReview &&  (<button style={{}} disabled={disabled} className='reviewSubmit'  type="submit">Update Your Review</button>)}
 
       </form>
       </div>
