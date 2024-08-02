@@ -239,3 +239,9 @@ padding-top: 7px;
     color: white;
     cursor: pointer;
 }
+
+.divider {
+width: 125px;
+display: flex;
+justify-content: space-between;
+}

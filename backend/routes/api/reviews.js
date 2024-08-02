@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const {Spot,Image,User,Review} = require('../../db/models');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const spot = require('../../db/models/spot');
+const { countReviews, averageRating, round } = require('./spots');
 
 const router = express.Router();
 
@@ -163,6 +164,12 @@ router.put('/:reviewId', async(req,res) => {
         await foundReview.save();
 
 
+        let spot = await Spot.findOne({where:{id:foundReview.spotId}});
+
+        let reviewsForSpot = await Review.findAll({where:{spotId:foundReview.spotId}});
+        updatingAverage(spot,reviewsForSpot)
+
+
        return res.json(foundReview);
     }catch(err){
 
@@ -209,8 +216,20 @@ router.delete('/:reviewId', async(req,res) => {
         await foundReview.destroy();
 
         let reviewsForSpot = await Review.findAll({where:{spotId:spot.id}});
+        updatingAverage(spot,reviewsForSpot)
 
-        let numReviewsSpot;
+        res.json({
+            message: "Successfully deleted"
+          });
+
+
+
+    }else res.status(403).json({message: "Forbidden"});
+}return res.status(401).json({message:"Authentication required"})
+})
+
+async function updatingAverage(spot,reviewsForSpot){
+    let numReviewsSpot;
         if(!reviewsForSpot.length){
             numReviewsSpot = 0;
         }else numReviewsSpot = await countReviews(reviewsForSpot);
@@ -227,49 +246,7 @@ router.delete('/:reviewId', async(req,res) => {
             avgRating:average
           });
 
-        res.json({
-            message: "Successfully deleted"
-          });
-
-
-
-    }else res.status(403).json({message: "Forbidden"});
-}return res.status(401).json({message:"Authentication required"})
-})
-
-
-
-async function countReviews(arr){
-    let count = 0;
-
-    for(let spot of arr){
-      count++
-    }
-
-    return count;
-  }
-
-
-  async function averageRating(reviews, arr = []){
-    let spot = await Spot.findOne({where:{id:reviews[0].spotId}});
-    if(spot.avgRating != 0) arr.push(spot.avgRating);
-
-    let count = 0;
-    for(let spot of reviews){
-      arr.push(spot.stars);
-    }
-
-    for(let curr of arr){
-      count += curr;
-    }
-
-    return count/arr.length
-
-  }
-  function round(value, decimalPlace) {
-    let multiplier = Math.pow(10, decimalPlace || 0);
-    return Math.round(value * multiplier) / multiplier;
+          return;
 }
-
 
 module.exports = router;

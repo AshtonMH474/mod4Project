@@ -15,10 +15,8 @@ import DeleteReview from "../DeleteReview";
     const {spotId} = useParams();
     const dispatch = useDispatch();
     const spot = useSelector((state) => state.spots);
-    // const reviews = useSelector((state) => state.reviews)
     const sessionUser = useSelector(state => state.session.user);
     const [reviewList, setReviewList] = useState([]);
-    // console.log(sessionUser)
     if(spot.avgStarRating)console.log(spot.avgStarRating.toFixed(1))
 
 
@@ -27,8 +25,6 @@ import DeleteReview from "../DeleteReview";
         const getData = async () => {
             dispatch(detailsOfSpot(spotId));
            const reviews = await dispatch(reviewsForSpot(spotId))
-        //    console.log(reviews)
-        //    console.log(spot)
            setReviewList(Object.values(reviews));
         }
 
@@ -165,7 +161,14 @@ return (
                     <h3 className="nameReview">{review.User.firstName}</h3>
                 <h3 className="dateReview">{formatDate(review.createdAt)}</h3>
                 <p className="reviewContent">{review.review}</p>
-                {sessionUser && review.User.id == userId && (<OpenModalButton buttonText='Delete' className="deleteReview" modalComponent={<DeleteReview reviewId={review.id} refresh={handleModalClose} />}/>)}
+
+                    <div className="divider">
+                {sessionUser && review.User.id == userId && (
+                    <OpenModalButton  className='deleteReview'
+                    buttonText="Update" modalComponent={<CreateReview spotId={spotId} refresh={handleModalClose} currReview={review} spot={spot} />}
+                 /> )}
+                    {sessionUser && review.User.id == userId && (<OpenModalButton buttonText='Delete' className="deleteReview" modalComponent={<DeleteReview reviewId={review.id} refresh={handleModalClose} />}/>)}
+                    </div>
                 </>
                 ):(
                     <p>Loading...</p>
