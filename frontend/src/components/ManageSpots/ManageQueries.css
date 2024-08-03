@@ -1,0 +1,31 @@
+@media (min-width: 1101px) and (max-width: 1480px) {
+    .mySpots{
+        position: relative;
+        right: 2%;
+        display: grid;
+        padding-top: 50px;
+        grid-template-columns: repeat(3,1fr);
+    }
+  }
+
+
+  @media (min-width: 721px) and (max-width: 1100px) {
+    .mySpots{
+        position: relative;
+        right: 2%;
+        display: grid;
+        padding-top: 50px;
+        grid-template-columns: repeat(2,1fr);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .mySpots{
+        position: relative;
+        left:20%;
+        display: grid;
+        padding-top: 50px;
+        grid-template-columns: repeat(1,1fr);
+
+    }
+  }

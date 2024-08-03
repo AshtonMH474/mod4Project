@@ -9,6 +9,7 @@ import { reviewsForSpot } from "../../store/reviews";
 import OpenModalButton from "../OpenModalButton";
 import CreateReview from "../CreateReview";
 import DeleteReview from "../DeleteReview";
+import './DetailsMedia.css';
 
 
  function SpotDetails (){

@@ -5,6 +5,7 @@
     import './home.css'
     import { getAllSpots } from "../../store/spots";
     import Tooltip from "./Tooltip";
+    import './homeMedia.css'
     // import Tooltip from "./Tooltip";
 
 

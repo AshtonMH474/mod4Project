@@ -1,0 +1,15 @@
+
+@media (min-width: 871px) and (max-width: 1150px) {
+.newSpotForm{
+left: 32%;
+}
+
+}
+
+
+@media (max-width: 870px) {
+    .newSpotForm{
+    left: 20%;
+    }
+
+    }
