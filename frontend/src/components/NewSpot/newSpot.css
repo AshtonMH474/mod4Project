@@ -55,6 +55,7 @@ div.aboveL{
     width: 95%;
     max-width: 95%;
     min-width: 95%;
+    background-color: #E8F0FE
 }
 
 
@@ -156,4 +157,51 @@ color:red;
 }
 .imagesCreateSpot{
     padding-bottom: 10px;
+}
+
+#previewImg{
+    display: none;
+}
+
+.previewButton{
+display: flex;
+position: relative;
+top:10px;
+justify-content: center;
+border: 1px solid black;
+height: 20px;
+color:white;
+background-color: #FF5A5F;
+border-radius: 8px;
+cursor: pointer;
+}
+.previewButton:hover{
+    background-color: #484848;
+}
+
+#otherImages{
+    display: none;
+}
+
+.otherImagesButton{
+    display: flex;
+    position: relative;
+    top:10px;
+    justify-content: center;
+    border: 1px solid black;
+    height: 20px;
+    color:white;
+    background-color: #FF5A5F;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+
+.otherImagesButton:hover{
+    background-color: #484848;
+}
+
+.selected{
+    position: relative;
+    left: 170px;
 }

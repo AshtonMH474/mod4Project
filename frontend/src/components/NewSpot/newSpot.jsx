@@ -248,7 +248,7 @@ function SpotForm(){
             fast wif or parking, and what you love about the neighborhood.</div>
 
 
-            <textarea type='text' value={description} placeholder='Description'
+            <textarea type='text' value={description} placeholder='Please write at least 30 characters'
             onChange={(e) => setDescription(e.target.value)}
             >
             {description}
@@ -291,8 +291,12 @@ function SpotForm(){
              {errors.imagesFormat && (<label id='ImageErrors'>{errors.imagesFormat}</label>)}
              </div>
              <div className='imagesCreateSpot'>
-             <div><input type="file"   onChange={previewChange} /></div>
-             <div><input type='file'  onChange={(e) => setFiles(Array.from(e.target.files))} multiple/></div>
+                <label className='previewButton' htmlFor='previewImg'>Preview Image</label>
+             <div><input id='previewImg' type="file"   onChange={previewChange} /></div>
+             {previewImage && (<div className='selected'>Preview Image Selected</div>)}
+             <label className='otherImagesButton' htmlFor='otherImages'>Other Images</label>
+             <div><input id='otherImages' type='file'  onChange={(e) => setFiles(Array.from(e.target.files))} multiple/></div>
+             {files.length > 0 && (<div className='selected'>Other Images Selected</div>)}
              </div>
         </div>
 

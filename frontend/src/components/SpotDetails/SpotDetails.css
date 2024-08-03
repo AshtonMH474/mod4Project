@@ -245,3 +245,8 @@ width: 125px;
 display: flex;
 justify-content: space-between;
 }
+#dot1{
+    position: relative;
+    left: 10px;
+    bottom: 5px;
+}

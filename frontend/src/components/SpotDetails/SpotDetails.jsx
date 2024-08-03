@@ -94,7 +94,7 @@ return (
 
             <div id='avgReview'>
 
-             {spot.avgStarRating > 0 && ( <div className="avg" ><CiStar className="star"/>{spot.avgStarRating.toFixed(1)}</div>)}
+             {spot.avgStarRating > 0 && ( <div className="avg" ><CiStar className="star"/>{spot.avgStarRating.toFixed(1)} </div>)}
              {spot.avgStarRating <= 0 && ( <div className="avgNew"><CiStar className="starNew"/>New</div>)}
 
              {spot.numReviews > 1 && (<div className="spotReview">
@@ -127,7 +127,7 @@ return (
         <div className="reviewTop">
         {spot.avgStarRating > 0 && ( <h2 id="starReview"> <CiStar className="starTop" />{spot.avgStarRating.toFixed(1)}</h2>)}
         {spot.avgStarRating <= 0 && ( <h2 id="starReview"><CiStar className="starTop"/>New</h2>)}
-
+        {spot.avgStarRating > 0 && (<div id='dot1'><h2 >.</h2></div>)}
          {spot.numReviews > 1 && (<h2 id='reviewNum'>
                 {spot.numReviews} reviews
             </h2>)}

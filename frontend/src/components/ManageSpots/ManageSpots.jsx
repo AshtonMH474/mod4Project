@@ -30,7 +30,7 @@ function ManageSpots() {
         <>
         <div className="manageSpotContainer">
             <h1>Manage your Spots</h1>
-            <button onClick={() => navigate(`/spots/new`)} className="ManageCreate">Create a New Spot</button>
+            {!newArr.length && (<button onClick={() => navigate(`/spots/new`)} className="ManageCreate">Create a New Spot</button>)}
 
             <div className="mySpots">
             {newArr.map((spot) => (
