@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { getAllSpots } from "../../store/spots";
 import { NavLink, useNavigate } from "react-router-dom";
 import './ManageSpots.css';
+import './ManageQueries.css'
 import OpenModalButton from "../OpenModalButton";
 import DeleteSpot from "../DeleteSpot";
 

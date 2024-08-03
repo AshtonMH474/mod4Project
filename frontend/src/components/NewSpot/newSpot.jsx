@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import './newSpot.css';
+import './newSpotMedia.css'
 import { useEffect, useState } from 'react';
 import { createSpot, detailsOfSpot, updateSpot } from '../../store/spots';
 import { useSelector } from 'react-redux';
