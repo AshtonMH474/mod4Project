@@ -3,9 +3,10 @@ import './newSpot.css';
 import { useEffect, useState } from 'react';
 import { createSpot, detailsOfSpot, updateSpot } from '../../store/spots';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 function SpotForm(){
+    const location = useLocation();
     const {spotId} = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -18,14 +19,11 @@ function SpotForm(){
     const [description,setDescription] = useState('')
     const [name,setName] = useState('')
     const [money,setMoney] = useState('')
-    // const [previewImage, setPreview] = useState('');
-    // const [image1, setImage1] = useState('');
-    // const [image2, setImage2] = useState('');
-    // const [image3, setImage3] = useState('');
-    // const [image4, setImage4] = useState('');
+
     const [errors, setErrors] = useState({});
+    console.log(location.pathname)
 
-
+    const user = useSelector((state) => state.session.user)
     const spot= useSelector((state) => state.spots);
     let id = spot.id
 
@@ -89,12 +87,16 @@ function SpotForm(){
             setImage3(null);
             setImage4(null);
         }
-        if(spot && id){
-            spotInfo();
-        }else{
+
+        if(!spot || !id || location.pathname == '/spots/new'){
             deleteInfo();
         }
-    },[dispatch,spotId,id])
+        if(location.pathname != '/spots/new' && (spot && id && spot.ownerId == user.id))spotInfo();
+
+
+        return;
+
+    },[dispatch,spotId,id,location])
     const handleSubmit = async (e) => {
         e.preventDefault();
 
