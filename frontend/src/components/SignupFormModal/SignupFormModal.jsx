@@ -5,7 +5,7 @@ import * as sessionActions from '../../store/session';
 import './SignupForm.css';
 
 
-function SignupFormModal() {
+function SignupFormModal({setShowMenu}) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -21,8 +21,9 @@ function SignupFormModal() {
     if(email.length && username.length && firstName.length && lastName.length && password.length && confirmPassword.length) setDisable(false);
     if(!email.length || !username.length || !firstName.length || !lastName.length || !password.length || !confirmPassword.length || password.length < 6 || username.length < 4) setDisable(true);
 
+    setShowMenu(false)
 
-  },[setDisable,email,username,firstName,lastName,password,confirmPassword]);
+  },[setShowMenu,setDisable,email,username,firstName,lastName,password,confirmPassword]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

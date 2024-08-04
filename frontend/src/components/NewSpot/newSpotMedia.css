@@ -7,9 +7,23 @@ left: 32%;
 }
 
 
-@media (max-width: 870px) {
+@media (min-width: 661px) and (max-width: 870px) {
     .newSpotForm{
     left: 20%;
     }
 
     }
+
+    @media (min-width:570px) and (max-width: 660px) {
+        .newSpotForm{
+        left: 10%;
+        }
+
+        }
+        @media (max-width: 569px) {
+            .newSpotForm{
+            left: 0%;
+            width: 400px
+            }
+
+            }

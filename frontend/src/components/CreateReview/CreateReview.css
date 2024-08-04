@@ -65,7 +65,7 @@ input[type='review']::placeholder{
 }
 
 .reviewSubmit:hover{
-    background-color:#484848 ;
+    background-color:#00525E ;
 }
 
 .reviewError{

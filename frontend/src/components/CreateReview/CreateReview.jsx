@@ -4,10 +4,12 @@ import StarRating from './StarRating';
 import { useModal } from '../../Context/Modal';
 
 import { addReview, updateReview } from '../../store/reviews';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { detailsOfSpot } from '../../store/spots';
 
-function CreateReview({spot,spotId,refresh,currReview}){
+function CreateReview({spotId,refresh,currReview}){
     const dispatch = useDispatch();
+    const spot = useSelector((state) => state.spots);
     const [review, setReview] = useState('')
     const [rating, setRating] = useState(0);
     const [disabled,setDisable] = useState(true)
@@ -46,8 +48,9 @@ function CreateReview({spot,spotId,refresh,currReview}){
     useEffect(() => {
        if(review.length < 10 || rating < 1) setDisable(true)
         if(review.length >= 10 && rating > 0 ) setDisable(false)
+      if(spotId)dispatch(detailsOfSpot(spotId));
 
-    },[setDisable,rating,review])
+    },[dispatch,spotId,setDisable,rating,review])
     return (
           <>
       <div className='createReviewContainer'>

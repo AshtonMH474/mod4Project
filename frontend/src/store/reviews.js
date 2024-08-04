@@ -3,6 +3,7 @@ const DELETE_REVIEW = 'reviews/DELETE_REVIEW'
 const SPOT_REVIEWS = 'reviews/SPOT_REVIEWS'
 const ADD_ONE = 'reviews/ADD_ONE'
 const UPDATE_REVIEW = 'reviews/UPDATE_REVIEW'
+const USER_REVIEWS = 'reviews/USER_REVIEWS'
 
  const spotReviews = (reviews) => {
     return{
@@ -32,6 +33,24 @@ const updatedReview = (review) => {
     }
 }
 
+const userReviews = (reviews) => {
+    return {
+        type:USER_REVIEWS,
+        reviews
+    }
+}
+
+
+export const currReviews = () => async (dispatch) => {
+    const res = await csrfFetch(`/api/reviews/current`);
+
+    if(res.ok){
+        let data = await res.json();
+
+        dispatch(userReviews(data.Reviews));
+        return data.Reviews;
+    }
+}
 export const updateReview = (review,payload) => async(dispatch) => {
     const res = await csrfFetch(`/api/reviews/${review.id}`, {
         method:'PUT',
@@ -87,6 +106,11 @@ const reviewReducer = (state = {}, action) => {
         case SPOT_REVIEWS:{
             const newState = {...action.reviews};
 
+            return newState;
+        }
+        case USER_REVIEWS:{
+            const newState = {};
+            action.reviews.forEach((review) => newState[review.id] = review);
             return newState;
         }
 

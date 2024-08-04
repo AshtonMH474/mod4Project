@@ -94,7 +94,7 @@ grid-template-rows: repeat(6,1fr) ;
         left: 0%;
     }
   }
-  @media  (max-width: 800px) {
+  @media (min-width:715px) and (max-width: 800px) {
     .spotContainer{
     width: 100%;
     left:1%;
@@ -110,6 +110,10 @@ grid-template-rows: repeat(6,1fr) ;
         width: 150px;
         position: relative;
         left: 70%;
+    }
+    .ownerD{
+        position: relative;
+        bottom: 500px;
     }
     .spotD{
         width: 300px;
@@ -132,13 +136,32 @@ grid-template-rows: repeat(6,1fr) ;
         left:1%;
         width: 100%;
        border-top: 1px black solid;
+       bottom: 200px;
     }
     .spotRating{
         position: relative;
         left: 20%;
         width: 300px;
+        bottom: 500px;
     }
     .reserve{
         width: 230px;
+    }
+  }
+  @media  (max-width: 714px) {
+    .currImage{
+        display: none;
+    }
+    .spotRating{
+        position: relative;
+        right: 50%;
+        width: 300px;
+        bottom: 300px;
+    }
+    .avgNew{
+        left: 0%;
+    }
+    .reserve{
+        width: 215px;
     }
   }
