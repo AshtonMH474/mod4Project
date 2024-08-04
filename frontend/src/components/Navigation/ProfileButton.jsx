@@ -13,23 +13,25 @@ function ProfileButton({ user }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
 
+  const closeMenu = (e) => {
+    if (!ulRef.current.contains(e.target)) {
+      setShowMenu(false);
+    }
+  };
 
   useEffect(() => {
     if (!showMenu) return;
 
-    const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
-        setShowMenu(false);
-      }
-    };
+
 
     document.addEventListener('click', closeMenu);
 
@@ -50,9 +52,8 @@ function ProfileButton({ user }) {
     <>
 
 
-
-      <div className="profile" onClick={toggleMenu}>
-             <FontAwesomeIcon className="profile-logo" icon={faAddressCard} />
+       <div className="profile"  onClick={toggleMenu}>
+             <FontAwesomeIcon  className="profile-logo" icon={faAddressCard} />
              </div>
       <div className={ulClassName} ref={ulRef}>
         {user ? (
@@ -62,6 +63,9 @@ function ProfileButton({ user }) {
             <div>{user.email}</div>
             <div>
                 <button className="buttonProfile" onClick={() => navigate('spots/current')}>Manage Spots</button>
+            </div>
+            <div>
+                <button className="buttonProfile" onClick={() => navigate('reviews/current')}>Manage Reviews</button>
             </div>
             <div>
               <button className="buttonProfile" onClick={logout}>Log Out</button>
@@ -74,13 +78,13 @@ function ProfileButton({ user }) {
             <div >
               <OpenModalButton
                 buttonText="Log In"
-                modalComponent={<LoginFormModal />}
+                modalComponent={<LoginFormModal setShowMenu={setShowMenu} />}
               />
             </div>
             <div>
               <OpenModalButton
                 buttonText="Sign Up"
-                modalComponent={<SignupFormModal />}
+                modalComponent={<SignupFormModal setShowMenu={setShowMenu}  />}
               />
             </div>
             </div>

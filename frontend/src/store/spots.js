@@ -89,16 +89,6 @@ export const updateSpot = (payload,id) => async(dispatch) => {
     if(res.ok){
         const spot = res.json();
 
-        // for(let i = 0; i < images.length; i++){
-        //     let image = images[i];
-        //     let imageDeleted = await csrfFetch(`/api/spot-images/${image.id}`);
-        //     if(imageDeleted.ok){
-
-        //     }
-
-
-        // }
-
 
         dispatch(updatingSpot(spot));
         return spot;

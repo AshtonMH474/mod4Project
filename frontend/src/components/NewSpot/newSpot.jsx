@@ -22,7 +22,7 @@ function SpotForm(){
     const [money,setMoney] = useState('')
 
     const [errors, setErrors] = useState({});
-    console.log(location.pathname)
+
 
     const user = useSelector((state) => state.session.user)
     const spot= useSelector((state) => state.spots);
@@ -62,7 +62,7 @@ function SpotForm(){
 
             let preview = spot.SpotImages.find((image) => image.preview = true)
             setPreview(preview.url);
-            console.log(preview)
+
 
             let images = spot.SpotImages.filter((image) => image.url != preview.url)
             if(images[0]) setImage1(images[0].url)
@@ -97,7 +97,7 @@ function SpotForm(){
 
         return;
 
-    },[dispatch,spotId,id,location])
+    },[spot, user.id,dispatch,spotId,id,location])
     const handleSubmit = async (e) => {
         e.preventDefault();
 

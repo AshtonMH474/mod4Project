@@ -76,7 +76,6 @@ div .boxProfile{
     display: flex;
     justify-content: space-between;
     padding: 25px;
-    z-index: 1000;
 
 }
 .newSpot{
@@ -95,6 +94,28 @@ top: 35px;
     bottom: 15px;
     right: 25px;
 }
+@media (max-width: 600px) {
+    .boxProfile{
+        width: 150px;
+        left:10%;
+    }
+    .relativePosition{
+        /* background-color: red; */
+        position: relative;
+        right: 0px;
+        left: 10px;
+    }
+    .groupLinks{
+        right: 0px;
+        left: 10px;
+    }
+    .newSpotLink{
+        position: relative;
+        bottom: 35px;
+        left: 125px;
+    }
+}
+
 .groupLinks{
     position: relative;
     top:3px;

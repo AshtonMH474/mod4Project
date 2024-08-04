@@ -7,6 +7,7 @@ import Home from './components/Home';
 import SpotDetails from './components/SpotDetails';
 import SpotForm from './components/NewSpot';
 import ManageSpots from './components/ManageSpots';
+import ManageReviews from './components/ManageReviews';
 
 
 
@@ -52,12 +53,21 @@ const router = createBrowserRouter([
       {
         path:'/spots/:spotId/edit',
         element:<SpotForm/>
+      },
+      {
+        path:'/reviews/current',
+        element:<ManageReviews/>
       }
     ]
   }
 ]);
 
 function App() {
+
+    useEffect(() => {
+      document.title = "ashton's airbnb"
+
+    }, [])
   return <RouterProvider router={router} />;
 }
 

@@ -18,7 +18,7 @@ import './DetailsMedia.css';
     const spot = useSelector((state) => state.spots);
     const sessionUser = useSelector(state => state.session.user);
     const [reviewList, setReviewList] = useState([]);
-    if(spot.avgStarRating)console.log(spot.avgStarRating.toFixed(1))
+
 
 
 

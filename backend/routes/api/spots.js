@@ -646,13 +646,13 @@ async function previewImage(spots, arr =[]){
 
 
    async function averageRating(reviews, arr = []){
-    let spot = await Spot.findOne({where:{id:reviews[0].spotId}});
-    if(spot.avgRating != 0) arr.push(spot.avgRating);
 
     let count = 0;
-    for(let spot of reviews){
-      arr.push(spot.stars);
+    for(let review of reviews){
+      arr.push(review.stars);
+
     }
+    console.log(arr);
 
     for(let curr of arr){
       count += curr;

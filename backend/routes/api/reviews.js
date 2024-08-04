@@ -210,9 +210,6 @@ router.delete('/:reviewId', async(req,res) => {
 
         let spot = await Spot.findOne({where:{id:foundReview.spotId}});
 
-
-
-
         await foundReview.destroy();
 
         let reviewsForSpot = await Review.findAll({where:{spotId:spot.id}});

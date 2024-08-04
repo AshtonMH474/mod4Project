@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../Context/Modal';
 import './LoginForm.css';
 
-function LoginFormModal() {
+function LoginFormModal({setShowMenu}) {
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
@@ -15,8 +15,8 @@ function LoginFormModal() {
   useEffect(() => {
     if(credential.length >= 4 && password.length >= 6) setDisable(false);
     if(credential.length < 4 || password.length < 6) setDisable(true);
-
-  },[setDisable,credential,password]);
+    setShowMenu(false)
+  },[setShowMenu,setDisable,credential,password]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

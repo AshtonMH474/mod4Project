@@ -17,12 +17,16 @@
         padding-top: 50px;
         grid-template-columns: repeat(2,1fr);
     }
+
+    .night{
+        left: 13%;
+    }
   }
 
   @media (max-width: 720px) {
     .mySpots{
         position: relative;
-        left:20%;
+        left:10%;
         display: grid;
         padding-top: 50px;
         grid-template-columns: repeat(1,1fr);
