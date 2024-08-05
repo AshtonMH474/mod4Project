@@ -1,9 +1,7 @@
 *{
     font-family: sans-serif;
 }
-body{
-    /* padding-top: 150px; */
-}
+
 
 .buttonProfile{
     position: relative;
@@ -87,6 +85,7 @@ top: 35px;
     text-decoration: none;
     color: #00525E ;
     cursor: pointer;
+
 
 }
 .relativePosition{

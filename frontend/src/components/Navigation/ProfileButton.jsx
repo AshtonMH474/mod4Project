@@ -53,9 +53,9 @@ function ProfileButton({ user }) {
 
 
        <div className="profile"  onClick={toggleMenu}>
-             <FontAwesomeIcon  className="profile-logo" icon={faAddressCard} />
+             <FontAwesomeIcon className="profile-logo" icon={faAddressCard} />
              </div>
-      <div className={ulClassName} ref={ulRef}>
+         <div className={ulClassName} ref={ulRef}>
         {user ? (
           <>
           <div className="boxProfile">
@@ -91,6 +91,7 @@ function ProfileButton({ user }) {
           </>
         )}
       </div>
+
     </>
   );
 }else{
@@ -100,7 +101,7 @@ function ProfileButton({ user }) {
 
 
              <div className="profile" onClick={toggleMenu}>
-             <FontAwesomeIcon className="profile-logo" icon={faAddressCard} />
+             <FontAwesomeIcon  className="profile-logo" icon={faAddressCard} />
              </div>
 
         </>
