@@ -73,6 +73,9 @@ function CreateReview({spotId,refresh,currReview}){
     <div className='starReview'>
     <StarRating rating={rating} onRatingChange={handleRatingChange}/>
     </div>
+    <div className='wordStars'>
+      Number of Stars
+    </div>
     {disabled == true &&  !currReview &&  (<button style={{backgroundColor:'#484848',cursor:'default'}} disabled={disabled} className='reviewSubmit'  type="submit">Submit Your Review</button>)}
     {disabled == false && !currReview && (<button style={{}} disabled={disabled} className='reviewSubmit'  type="submit">Submit Your Review</button>)}
 

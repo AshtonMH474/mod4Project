@@ -25,6 +25,9 @@ grid-template-rows: repeat(6,1fr) ;
         width: 1000px;
        border-top: 1px black solid;
     }
+    .allReviews{
+        left: 30%;
+    }
   }
 
 @media (min-width: 1090px) and (max-width: 1170px) {
@@ -54,6 +57,9 @@ grid-template-rows: repeat(6,1fr) ;
         width: 1000px;
        border-top: 1px black solid;
     }
+    .allReviews{
+        left: 10%;
+    }
   }
 
   @media (min-width: 1001px) and (max-width: 1089px) {
@@ -79,9 +85,12 @@ grid-template-rows: repeat(6,1fr) ;
 
     .reviewsPerSpot{
         position: relative;
-        left:1%;
+        left:10%;
         width: 1000px;
        border-top: 1px black solid;
+    }
+    .allReviews{
+        left: 10%;
     }
   }
 
@@ -91,7 +100,10 @@ grid-template-rows: repeat(6,1fr) ;
         left: 0%;
     }
      .reviewsPerSpot{
-        left: 0%;
+        left: 5%;
+    }
+    .allReviews{
+        left: 5%;
     }
   }
   @media (min-width:715px) and (max-width: 800px) {
@@ -147,6 +159,10 @@ grid-template-rows: repeat(6,1fr) ;
     .reserve{
         width: 230px;
     }
+    .allReviews{
+        left: 2%;
+        bottom: 175px;
+    }
   }
   @media  (max-width: 714px) {
     .currImage{
@@ -154,14 +170,21 @@ grid-template-rows: repeat(6,1fr) ;
     }
     .spotRating{
         position: relative;
-        right: 50%;
-        width: 300px;
+        left: -115%;
+        width: 400px;
         bottom: 300px;
     }
     .avgNew{
         left: 0%;
     }
     .reserve{
-        width: 215px;
+        width: 300px;
+    }
+    .reviewsPerSpot{
+        width: auto;
+    }
+    .ownerD{
+        bottom: 150px;
+        right: 10%;
     }
   }

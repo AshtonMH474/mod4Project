@@ -73,3 +73,9 @@ input[type='review']::placeholder{
     text-align: center;
     padding-bottom: 10px;
 }
+
+.wordStars{
+    text-align: center;
+    padding: 5px;
+    font-weight: bold;
+}
