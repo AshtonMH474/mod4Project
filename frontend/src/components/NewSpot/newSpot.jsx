@@ -257,7 +257,7 @@ function SpotForm(){
             {description}
             </textarea>
 
-            {errors.description && (<p id='createErrorsDown'>Description needs a minimum of 30 characters</p>)}
+            {errors.description && (<p id='createErrorsDown'>Description needs a minimum of 30 characters and a max of 500.</p>)}
 
         </div>
 
