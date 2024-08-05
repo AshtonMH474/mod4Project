@@ -95,9 +95,9 @@ function SpotForm(){
         if(location.pathname != '/spots/new' && (spot && id && spot.ownerId == user.id))spotInfo();
 
 
-        return;
 
-    },[spot, user.id,dispatch,spotId,id,location])
+
+    },[user.id,dispatch,spotId,id,location])
     const handleSubmit = async (e) => {
         e.preventDefault();
 
