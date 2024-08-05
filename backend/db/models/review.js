@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     allowNull:false,
     validate: {
       notEmpty:true,
-      len:[10,Infinity]
+      len:[10,255]
     }
     },
     stars:{
